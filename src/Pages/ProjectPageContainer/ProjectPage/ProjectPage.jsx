@@ -8,9 +8,10 @@ function ProjectPage({ProjectData, ProjectCreator}) {
 
     function ModalForm() {
         const [title, setTitle] = useState('')
+
         function HandleSubmit(e) {
             e.preventDefault()
-            ProjectCreator(title,ProjectData.length+1)
+            ProjectCreator(title, ProjectData.length + 1)
             setModalActive(false)
         }
 
@@ -26,7 +27,7 @@ function ProjectPage({ProjectData, ProjectCreator}) {
         <div className={c.Projects}>
             {
                 ProjectData.map((el) =>
-                    <ProjectCard id={el.id} title={el.title} key={el.id}/>)}
+                    <ProjectCard id={el.id} title={el.name} key={el.id}/>)}
         </div>
         <button onClick={() => setModalActive(true)}>Creat Project</button>
         <Modal active={modalActive} setActive={setModalActive}>

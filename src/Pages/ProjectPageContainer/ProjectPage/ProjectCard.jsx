@@ -1,7 +1,6 @@
 import React from "react";
 import c from './ProjectPage.module.less'
 import {Link} from "react-router-dom";
-import moment from "moment";
 
 function ProjectCard({title}) {
 

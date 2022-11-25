@@ -1,11 +1,8 @@
-
-
 const CREATE_TODO = 'CREATE-TODO'
-const CHANGE_STATUS='CHANGE-STATUS'
+const CHANGE_STATUS = 'CHANGE-STATUS'
 
 let initialState = {
-    id:1,
-    Todo:[]
+    Todo: []
 }
 const todoPageReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -22,7 +19,6 @@ const todoPageReducer = (state = initialState, action) => {
                     deadLine: action.deadLine,
                     status: action.status
                 }],
-                id:action.projectId
             }
         case CHANGE_STATUS:
 
@@ -40,14 +36,12 @@ const todoPageReducer = (state = initialState, action) => {
             }
 
 
-
-
         default:
             return state
     }
 }
 
-export let TodoCreator = (title, description, id, priority, created, deadLine,projectId) => ({
+export let TodoCreator = (title, description, id, priority, created, deadLine) => ({
     type: CREATE_TODO,
     id: id,
     title: title,
@@ -56,12 +50,11 @@ export let TodoCreator = (title, description, id, priority, created, deadLine,pr
     created: created,
     deadLine: deadLine,
     status: 'Queue',
-    projectId:projectId
 })
-export let ChangeStatusCreator=(id,status)=>({
+export let ChangeStatusCreator = (id, status) => ({
     type: CHANGE_STATUS,
-    id:id,
-    status:status
+    id: id,
+    status: status
 })
 
 

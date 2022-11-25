@@ -4,7 +4,7 @@ import projectPageReducer from "./ProjectPage-reducer"
 
 let reducers = combineReducers({
     ProjectPage: projectPageReducer,
-    TodoPage:todoPageReducer,
+    TodoPage: todoPageReducer,
 })
 
 const store = createStore(reducers)

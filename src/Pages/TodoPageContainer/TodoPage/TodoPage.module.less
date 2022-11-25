@@ -35,6 +35,10 @@ input:active {
   transform: scale(1.1);
 }
 
+.activeItem {
+  background: mediumpurple !important;
+}
+
 .todo {
   position: relative;
   word-break: break-all;
@@ -67,40 +71,51 @@ input:active {
 
 .TodoPage__info {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr ;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr;
 }
-.TodoPage__info>div{
+
+.TodoPage__info > div {
   color: white;
   border: 1px solid white;
 }
+
 .info__create {
   grid-column: 1/2;
 }
-.info__comments{
+
+.info__comments {
   grid-column: 5/-1;
   grid-row: 1/3;
 }
-.info__extraTodo{
+
+.info__extraTodo {
   grid-column: 2/5;
   grid-row: 2/3;
 }
 
 //dragDrop css
 .info__dragDrop {
-  grid-template-columns: repeat(3,1fr);
-  grid-template-rows: 1fr 1fr 1fr;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  justify-items: center;
   grid-column: 2/5;
   grid-row: 1/2;
   padding: 1rem;
 
 }
 
-.row {
+.info__dragDrop > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
 
+.info__dragDrop > div > div {
+  margin-top: 1rem;
 }
-.row>div{
-}
+
 .colHeader {
   width: 150px;
   box-shadow: 4px 4px 9px rgba(198, 198, 198, 0.36);
@@ -111,10 +126,11 @@ input:active {
 }
 
 .item {
-  display:flex;
-  align-items:center;
-  width: 150px;
-  height: 80px;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  word-break: break-all;
+  min-height: content-box;
   border: 1px solid #eee;
   box-shadow: 4px 4px 9px rgba(198, 198, 198, 0.36);
   border-radius: 20px;
@@ -124,7 +140,7 @@ input:active {
   text-align: center;
   cursor: grab;
   font-size: 1.5rem;
-  font-weight:700;
+  font-weight: 700;
 }
 
 .item:active {
@@ -147,29 +163,32 @@ input:active {
 .done {
   background: linear-gradient(90deg, #84fab0 0%, #8fd3f4 100%);
 }
-.hide{
-  display:none;
-}
-.hold{
 
+.hide {
+  display: none;
 }
 
+.hold {
 
-.hovered{
+}
+
+
+.hovered {
   border-block-start: 3px solid;
   border-image-slice: 1;
-  animation:gradient;
+  animation: gradient;
   animation-duration: 1s;
   animation-iteration-count: infinite;
 }
-@keyframes gradient{
-  0%{
-    border-image-source: linear-gradient(90deg,orange 50%,black 50%);
+
+@keyframes gradient {
+  0% {
+    border-image-source: linear-gradient(90deg, orange 50%, black 50%);
   }
-  50%{
-    border-image-source: linear-gradient(90deg,black 50%,orange 50%);
+  50% {
+    border-image-source: linear-gradient(90deg, black 50%, orange 50%);
   }
-  100%{
-    border-image-source: linear-gradient(90deg,orange 50%,black 50%);
+  100% {
+    border-image-source: linear-gradient(90deg, orange 50%, black 50%);
   }
 }

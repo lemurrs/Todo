@@ -1,21 +1,15 @@
 import React, {useState} from "react";
 import TodoPage from "./TodoPage/TodoPage";
 import {connect} from "react-redux";
-import {ChangeStatusCreator, TodoCreator} from "../../redux/TodoPage-reducer";
+import {ChangeStatus, SetTodoCreator} from "../../redux/ProjectPage-reducer";
 
 
-const TodoPageContainer=({Todo,TodoCreator,ChangeStatusCreator})=>{
-
-    console.log(Todo)
-
-
-
-
-    return (<TodoPage Todo={Todo} TodoCreator={TodoCreator} ChangeStatusCreator={ChangeStatusCreator} />)
+const TodoPageContainer = ({SetTodoCreator, ProjectData, ChangeStatus}) => {
+    return (<TodoPage SetTodoCreator={SetTodoCreator} ProjectData={ProjectData} ChangeStatus={ChangeStatus}/>)
 }
 let mapStateToProps = (state) => ({
-    Todo: state.TodoPage.Todo
+    ProjectData: state.ProjectPage.ProjectData
 })
 
-export default connect(mapStateToProps, {TodoCreator,ChangeStatusCreator})(TodoPageContainer)
+export default connect(mapStateToProps, {SetTodoCreator, ChangeStatus})(TodoPageContainer)
 
