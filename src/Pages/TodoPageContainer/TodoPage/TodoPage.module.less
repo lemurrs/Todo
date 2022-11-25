@@ -1,0 +1,175 @@
+@import "../../../less/Mixins";
+
+.TodoPage__title {
+  .title()
+}
+
+.TodoPage__todoCreator {
+  .flex();
+
+}
+
+input {
+  .todos();
+  padding-left: 1.5rem;
+  margin-right: 2rem;
+  word-break: break-all;
+}
+
+input:focus,
+input:active {
+  outline: none;
+}
+
+.TodoPage {
+}
+
+.TodoPage__button {
+  transition: all 0.5s;
+  .button();
+  flex: 1;
+}
+
+.TodoPage__button:hover {
+  background: blue;
+  transform: scale(1.1);
+}
+
+.todo {
+  position: relative;
+  word-break: break-all;
+  display: flex;
+  align-items: center;
+  padding-left: 1rem;
+  color: white;
+  .todos();
+  margin-bottom: 1rem;
+}
+
+.todo__delete {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+
+}
+
+.todo__delete svg {
+  width: 1.5rem;
+  height: 1.5rem;
+  transition: all 0.2s
+}
+
+.todo__delete svg:hover {
+  transform: scale(1.3);
+}
+
+
+.TodoPage__info {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr ;
+  grid-template-rows: 1fr 1fr;
+}
+.TodoPage__info>div{
+  color: white;
+  border: 1px solid white;
+}
+.info__create {
+  grid-column: 1/2;
+}
+.info__comments{
+  grid-column: 5/-1;
+  grid-row: 1/3;
+}
+.info__extraTodo{
+  grid-column: 2/5;
+  grid-row: 2/3;
+}
+
+//dragDrop css
+.info__dragDrop {
+  grid-template-columns: repeat(3,1fr);
+  grid-template-rows: 1fr 1fr 1fr;
+  grid-column: 2/5;
+  grid-row: 1/2;
+  padding: 1rem;
+
+}
+
+.row {
+
+}
+.row>div{
+}
+.colHeader {
+  width: 150px;
+  box-shadow: 4px 4px 9px rgba(198, 198, 198, 0.36);
+  border-radius: 20px;
+  padding: 0.8rem 1rem;
+  color: #fff;
+  margin-bottom: 1rem;
+}
+
+.item {
+  display:flex;
+  align-items:center;
+  width: 150px;
+  height: 80px;
+  border: 1px solid #eee;
+  box-shadow: 4px 4px 9px rgba(198, 198, 198, 0.36);
+  border-radius: 20px;
+  background: #f7f6f7;
+  padding: 0.8rem 1rem;
+  color: black;
+  text-align: center;
+  cursor: grab;
+  font-size: 1.5rem;
+  font-weight:700;
+}
+
+.item:active {
+  cursor: grabbing;
+}
+
+.placeholder {
+  width: 150px;
+  height: 50vh
+}
+
+.start {
+  background: linear-gradient(90deg, #ff85e4 0%, #229efd 179.25%);
+}
+
+.progress {
+  background: linear-gradient(90deg, #209cff 0%, #68e0cf 100%);
+}
+
+.done {
+  background: linear-gradient(90deg, #84fab0 0%, #8fd3f4 100%);
+}
+.hide{
+  display:none;
+}
+.hold{
+
+}
+
+
+.hovered{
+  border-block-start: 3px solid;
+  border-image-slice: 1;
+  animation:gradient;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+}
+@keyframes gradient{
+  0%{
+    border-image-source: linear-gradient(90deg,orange 50%,black 50%);
+  }
+  50%{
+    border-image-source: linear-gradient(90deg,black 50%,orange 50%);
+  }
+  100%{
+    border-image-source: linear-gradient(90deg,orange 50%,black 50%);
+  }
+}
