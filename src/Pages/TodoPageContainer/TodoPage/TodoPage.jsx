@@ -6,7 +6,8 @@ import TodoInfo from "./TodoInfo";
 import Modal from "../../../Components/Modal/Modal";
 
 
-function TodoPage({ProjectData, SetTodoCreator, ChangeStatus}) {
+
+function TodoPage({ProjectData, SetTodoCreator, ChangeStatus,ChangeTodo}) {
 
     const loc = useLocation()
     const pathName = loc.pathname.replace('/', '')
@@ -39,7 +40,7 @@ function TodoPage({ProjectData, SetTodoCreator, ChangeStatus}) {
                 }} type={'text'} placeholder={'descr'}/>
 
                 <select id="priority">
-                    <option value={''} label="Приоритетность: "/>
+                    <option value={''} label="Priority: "/>
                     <option value={'Urgent and important'} label="Urgent and important"/>
                     <option value={'Urgent'} label="Urgent"/>
                     <option value={'Important'} label="important"/>
@@ -155,7 +156,7 @@ function TodoPage({ProjectData, SetTodoCreator, ChangeStatus}) {
     return (<section className={c.TodoPage}>
         <div className={c.TodoPage__info}>
             <div className={c.info__info}>
-                {ActiveTodo && <TodoInfo ActiveTodo={ActiveTodo[0]}/>}
+                {ActiveTodo && <TodoInfo ActiveTodo={ActiveTodo[0]} pathName={pathName} ChangeTodo={ChangeTodo}/>}
             </div>
             <div className={c.info__create}>
                 <div className={c.TodoPage__todoCreator}>

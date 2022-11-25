@@ -1,6 +1,7 @@
 const CREATE_TODO = 'CREATE-TODO'
 const CHANGE_STATUS = 'CHANGE-STATUS'
 
+
 let initialState = {
     Todo: []
 }
@@ -34,7 +35,6 @@ const todoPageReducer = (state = initialState, action) => {
                     }
                 })
             }
-
 
         default:
             return state

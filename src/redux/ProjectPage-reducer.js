@@ -1,6 +1,7 @@
 const CREATE_PROJECT = 'CREATE-PROJECT'
 const SET_TODO = 'SET-TODO'
 const CHANGE_STATUS = 'CHANGE-STATUS'
+const CHANGE_TODO='CHANGE-TODO'
 let initialState = {
     ProjectData: [{
         name: 'FirstProject',
@@ -63,6 +64,31 @@ const projectPageReducer = (state = initialState, action) => {
                     }
                 })
             }
+        case CHANGE_TODO:
+            debugger;
+            return {
+                ...state, ProjectData: state.ProjectData.map(el => {
+                    if (el.name !== action.name) {
+                        return el
+                    }
+                    return {
+                        ...el,
+                        Todo: el.Todo.map(el => {
+                            if (el.id !== action.id) {
+                                return el
+                            }
+                            return {
+                                ...el,
+                                title: action.title,
+                                description: action.description,
+                                priority: action.priority,
+                                deadLine: action.deadLine,
+                            }
+                        })
+                    }
+                })
+            }
+
         default:
             return state
     }
@@ -88,6 +114,15 @@ export let ChangeStatus = (name, id, status) => ({
     id: id,
     status: status
 
+})
+export let ChangeTodo=(name,id,title,description,priority,deadLine)=>({
+    type:CHANGE_TODO,
+    name:name,
+    id:id,
+    title:title,
+    description:description,
+    priority:priority,
+    deadLine:deadLine
 })
 
 export default projectPageReducer
