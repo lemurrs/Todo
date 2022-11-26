@@ -32,7 +32,7 @@ const projectPageReducer = (state = initialState, action) => {
                                     status: action.status,
                                     extraTasks: action.extraTasks,
                                     comments:action.comments,
-                                    replys:action.replys
+                                    files:action.files
                                 }
 
                             ]
@@ -212,7 +212,7 @@ export let addCommentCreator=(name,id,commentId,text)=>({
     text:text
 
 })
-export let SetTodoCreator = (name, id, title, description, priority, created, deadLine) => ({
+export let SetTodoCreator = (name, id, title, description, priority, created, deadLine,files=[]) => ({
     type: SET_TODO,
     name: name,
     id: id,
@@ -224,7 +224,7 @@ export let SetTodoCreator = (name, id, title, description, priority, created, de
     status: 'Queue',
     extraTasks:[],
     comments:[],
-    replys:[],
+    files:files
 })
 export let AddExtraTask=(name,id,extra)=>({
     type: ADD_EXTRA,

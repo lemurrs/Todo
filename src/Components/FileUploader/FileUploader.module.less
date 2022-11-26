@@ -1,0 +1,46 @@
+
+.fileUploader__customButton {
+  cursor: pointer;
+  background-color: #a9a9a9;
+  border: 1px solid black;
+  border-radius: 12px;
+  padding: 1rem;
+}
+.fileUploader{
+  position: relative;
+  padding: 3rem;
+  text-indent: -9999px;
+  height: 100px;
+  width: 500px;
+}
+.fileUploader:after{
+  color: white;
+  content: "Drop files here";
+  position: absolute;
+  top: 1.8rem;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  text-indent: 0;
+  text-align: center;
+}
+
+.fileUploader input{
+width: 100%;
+  margin-right: 0;
+  opacity: 0;
+  position: absolute;
+  z-index: -1;
+
+}
+.fileUploader__preview {
+  height: 5rem;
+  border: 1px dashed gray;
+  border-radius: 12px;
+  width: 5rem;
+}
+.fileUploader__fileName{
+  margin-bottom: 1rem;
+  text-align: center;
+}

@@ -1,4 +1,4 @@
-import React, {FormEvent, useEffect, useState} from "react";
+import React, {useState} from "react";
 import c from './ProjectPage.module.less'
 import Modal from "../../../Components/Modal/Modal";
 import ProjectCard from "./ProjectCard";
@@ -7,7 +7,6 @@ import {Link} from "react-router-dom";
 function ProjectPage({ProjectData, ProjectCreator}) {
     const [modalActive, setModalActive] = useState(false)
     const [projectInfo, setProjectInfo] = useState()
-
 
     function ModalForm() {
         const [title, setTitle] = useState('')

@@ -2,6 +2,7 @@ import React, {useState} from 'react'
 import c from "./TodoPage.module.less";
 import moment from "moment";
 import svg from '../../../common/svg/symbol-defs.svg'
+import FileUploader from "../../../Components/FileUploader/FileUploader";
 
 
 
@@ -95,8 +96,19 @@ function TodoInfo({
             <p><b>Created: </b>{ActiveTodo.created}</p>
             <p><b>Dead line: </b>{ActiveTodo.deadLine}</p>
             <p><b>Status: </b> {ActiveTodo.status} </p>
+            <p><b>Uploaded files: </b>
+                <div className={c.fileUploader__fileName}>
+                    {ActiveTodo.files.map(file => {
+                        let objectURL = URL.createObjectURL(file);
+
+                        return(
+                        <a href={objectURL} download={file.name}>{file.name}</a>
+                    )})}
+                </div>
+            </p>
         </div> :
         <TodoInfoForm ChangeTodo={ChangeTodo}/>
+
         }
 
         {!change && <svg className={c.infoSvg}>

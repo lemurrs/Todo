@@ -6,6 +6,7 @@ import TodoInfo from "./TodoInfo";
 import Modal from "../../../Components/Modal/Modal";
 import Comments from "./Comments/Comments";
 import svg from '../../../common/svg/symbol-defs.svg'
+import FileUploader from "../../../Components/FileUploader/FileUploader";
 
 
 
@@ -22,15 +23,15 @@ function TodoPage({ProjectData, SetTodoCreator, ChangeStatus,ChangeTodo,AddExtra
         const [DateDays, setDateDays] = useState('')
         const [DateHours, setDateHours] = useState('')
         const [DateMinutes, setDateMinutes] = useState('')
+        const [uploadedFiles, setUploadedFiles] = useState([])
         function HandleSubmit(e) {
             e.preventDefault()
             const priority = document.getElementById('priority').value
             const created = moment().format('MMMM Do YYYY, h:mm:ss a');
             const deadLine = moment().add(DateDays, 'days').add(DateHours, 'hours').add(DateMinutes, 'minutes').format("MMMM Do YYYY, h:mm:ss a")
-            SetTodoCreator(pathName, ProjectData.filter(el => el.name === pathName)[0].Todo.length + 1, title, description, priority, created, deadLine)
+            SetTodoCreator(pathName, ProjectData.filter(el => el.name === pathName)[0].Todo.length + 1, title, description, priority, created, deadLine,uploadedFiles)
             setActiveModal(false)
         }
-
         return (
             <form className={c.TodoPage__modal} onSubmit={(e) => HandleSubmit(e)}>
                 <input value={title} onChange={(e) => {
@@ -59,6 +60,8 @@ function TodoPage({ProjectData, SetTodoCreator, ChangeStatus,ChangeTodo,AddExtra
                         setDateMinutes(e.target.value)
                     }}/>
                 </div>
+                <FileUploader uploadedFiles={uploadedFiles} setUploadedFiles={setUploadedFiles}/>
+
                 <button disabled={(!DateDays && !DateHours && !DateMinutes) || !title || !description || !document.getElementById('priority').value}>Save</button>
             </form>
         )
