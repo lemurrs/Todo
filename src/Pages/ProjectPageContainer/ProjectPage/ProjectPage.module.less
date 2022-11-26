@@ -1,27 +1,115 @@
+@import "../../../less/Mixins";
 .Project {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-size: 1.2rem;
-  width: 25rem;
-  background: #afadad;
+  background: #8e81f1;
   border-radius: 10px;
-  text-align: center;
+  width: 100%;
+  transition: all .5s ease;
+}
+
+.ProjectPage{
+  max-width: 1500px;
+  margin: 0 auto;
 }
 
 .Project h1 {
-  padding: 1rem;
+  color: black;
+  word-break: break-all;
+  padding: 3rem;
   margin: 0;
-  width: 100%;
-  height: 100%;
 }
+.Project:hover {
+  transform: scale(1.05);
+}
+.Project:before{
+  content: '';
+  width: 2px;
+  height: 100%;
+  background: beige;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  border-radius: 100%;
+}
+.Project:hover:before{
+  animation: choosenProject;
+  animation-duration: 1s;
+  animation-timing-function: ease;
+  backface-visibility: hidden;
 
+}
+@keyframes glow {
+
+
+  0%{
+    box-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #6e495d, 0 0 40px #ffdb4d, 0 0 50px #ffdb4d, 0 0 60px #ffdb4d, 0 0 70px #ffdb4d;
+  }
+  100%{
+    box-shadow: 0 0 20px #fff, 0 0 30px #ffdb4d, 0 0 40px #ffdb4d, 0 0 50px #ffdb4d, 0 0 60px #ffdb4d, 0 0 70px #ffdb4d, 0 0 80px #ffdb4d;
+  }
+}
+@keyframes choosenProject {
+  0%{
+    border-radius: 100%;
+    opacity: 1;
+    left: 0;
+    box-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #6e495d, 0 0 40px #ffdb4d, 0 0 50px #ffdb4d, 0 0 60px #ffdb4d, 0 0 70px #ffdb4d;
+  }
+  100%{
+    top: 3%;
+    height: 90%;
+    opacity: 1;
+    left: 100%;
+    box-shadow: 0 0 20px #fff, 0 0 30px #ffdb4d, 0 0 40px #ffdb4d, 0 0 50px #ffdb4d, 0 0 60px #ffdb4d, 0 0 70px #ffdb4d, 0 0 80px #ffdb4d;
+  }
+
+}
+.ProjectPage__Button{
+  transform: translateY(-50%);
+.flex()
+}
+.ProjectPage__Button>button{
+.button();
+  transition-duration: 0.15s;
+}
+.ProjectPage__Button>button:hover{
+  transform: scale(1.1);
+}
 .Projects {
   padding: 1rem;
   display: grid;
   gap: 1rem;
-  grid-template-rows: 1fr 1fr;
-  grid-template-columns: min-content;
-  grid-auto-flow: column;
+  grid-template-columns: repeat(4,minmax(min-content,1fr));
+  grid-auto-flow: row;
 }
+.ProjectPage__form{
+  height: 100%;
+  .flex();
+  flex-direction: column;
 
+
+}
+.ProjectPage__form button{
+  margin-top: 5rem;
+  .button();
+  transition-duration: 0.15s;
+}
+.ProjectPage__form button:disabled{
+background: gray;
+}
+.ProjectPage__form button:hover{
+  transform: scale(1.05);
+}
+.ProjectPage__form input{
+  width: 100%;
+  margin: 0;
+
+}
 .Project p {
   margin: 0;
   margin-bottom: 1rem;
@@ -30,6 +118,7 @@
 .Project p:last-child {
   margin-bottom: 0;
 }
+
 
 .FormDate input {
   width: 50px;

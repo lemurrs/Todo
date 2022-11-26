@@ -5,10 +5,31 @@
 }
 
 .TodoPage__todoCreator {
+  height: 100%;
   .flex();
-
+  flex-direction: column;
+  padding: 1rem;
 }
-
+.TodoPage__todoCreator>button:first-child{
+  margin-bottom: 1rem;
+}
+.TodoPage__todoCreator>button{
+  width: 100%;
+}
+svg{
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+}
+.infoSvg{
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  fill: whitesmoke;
+}
+.Project{
+  position: relative;
+}
 input {
   .todos();
   padding-left: 1.5rem;
@@ -22,6 +43,9 @@ input:active {
 }
 
 .TodoPage {
+  border-radius: 1rem;
+  max-width: 1500px;
+  margin: 1rem auto;
 }
 
 .TodoPage__button {
@@ -32,13 +56,21 @@ input:active {
 
 .TodoPage__button:hover {
   background: blue;
-  transform: scale(1.1);
+  transform: scale(1.05);
 }
 
 .activeItem {
   background: mediumpurple !important;
 }
-
+.BackArrow{
+  position: absolute;
+  top: 28%;
+  left: 8%;
+  fill: whitesmoke;
+}
+.test{
+  margin-top: 1rem;
+}
 .todo {
   position: relative;
   word-break: break-all;
@@ -58,6 +90,37 @@ input:active {
 
 }
 
+
+.info__info{
+  position: relative;
+  margin: 1rem;
+  padding: 0 1rem;
+  min-height: 18rem;
+  background: #444343;
+  border-radius: 1rem;
+}
+.InfoForm select{
+  .select()
+}
+.InfoForm button{
+  .button();
+  margin-bottom: 1rem;
+  transition-duration: .5s;
+}
+.InfoForm button:hover{
+  background: blue;
+  transform: scale(1.1);
+}
+.InfoForm button:disabled{
+  background: gray;
+}
+.InfoForm button:disabled:hover{
+  transform: scale(1);
+}
+
+.info__info h2{
+  text-align: center;
+}
 .todo__delete svg {
   width: 1.5rem;
   height: 1.5rem;
@@ -67,17 +130,35 @@ input:active {
 .todo__delete svg:hover {
   transform: scale(1.3);
 }
-
-
+.TodoPage__ExtraTasks{
+  width: 33%;
+  padding: 1rem;
+  border-radius: 1rem;
+  color: white;
+  margin-top: 1rem;
+  background: #313131;
+  text-align: center;
+}
+.ExtraTasks__task{
+  background: #494848;
+  width: max-content;
+  display: flex;
+  margin: 0 auto;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border-radius: 1rem;
+}
 .TodoPage__info {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
+  grid-template-rows: 2fr  1fr;
+  background: #313131;
+  border-radius: 1rem;
 }
+
 
 .TodoPage__info > div {
   color: white;
-  border: 1px solid white;
 }
 
 .info__create {
@@ -85,8 +166,33 @@ input:active {
 }
 
 .info__comments {
+  margin: 1rem;
   grid-column: 5/-1;
   grid-row: 1/3;
+  padding: 1rem;
+  background: #444343;
+  border-radius: 1rem;
+}
+.info__comments h3{
+  text-align: center;
+  font-size: 1.5rem;
+  margin: 0;
+  margin-bottom: 1rem;
+}
+.info__comments button{
+  background: none;
+  outline: none;
+  border: none;
+  color: deepskyblue;
+  cursor: pointer;
+  font-size: 1rem;
+}
+.info__comments button:disabled{
+  display: none;
+}
+.info__comments input{
+
+  margin: 0;
 }
 
 .info__extraTodo {
@@ -100,9 +206,48 @@ input:active {
   grid-template-columns: repeat(3, 1fr);
   justify-items: center;
   grid-column: 2/5;
-  grid-row: 1/2;
+  grid-row: 1/-1;
   padding: 1rem;
-
+  gap: 1rem;
+}
+.TodoPage__NewTaskBlock{
+  display: flex;
+}
+.TodoPage__NewTaskBlock input{
+  margin-right: 0.5rem;
+}
+.TodoPage__NewTaskBlock button{
+  .button();
+  font-size: 1rem;
+  transition-duration: 0.5s;
+}
+.TodoPage__NewTaskBlock button:hover{
+  transform: scale(1.15);
+  background: blue
+}
+.TodoPage__NewTaskBlock button:disabled{
+  background: gray;
+}
+.TodoPage__NewTaskBlock button:disabled:hover{
+  transform: scale(1);
+}
+.info__dragDrop .Board:first-child{
+  padding: 1rem;
+  border: 1px solid red;
+  background: rgba(255,0,0,0.1);
+  border-radius: 1rem;
+}
+.info__dragDrop .Board:nth-child(2){
+  border: 1px solid blue;
+  background: rgba(0,0,255,0.1);
+  padding: 1rem;
+  border-radius: 1rem;
+}
+.info__dragDrop .Board:nth-child(3){
+  border: 1px solid green;
+  background: rgba(0,255,0,0.1);
+  padding: 1rem;
+  border-radius: 1rem;
 }
 
 .info__dragDrop > div {
@@ -151,44 +296,45 @@ input:active {
   width: 150px;
   height: 50vh
 }
-
-.start {
-  background: linear-gradient(90deg, #ff85e4 0%, #229efd 179.25%);
+.TodoPage__modal{
+  .flex();
+  flex-direction: column;
 }
-
-.progress {
-  background: linear-gradient(90deg, #209cff 0%, #68e0cf 100%);
-}
-
-.done {
-  background: linear-gradient(90deg, #84fab0 0%, #8fd3f4 100%);
-}
-
-.hide {
-  display: none;
-}
-
-.hold {
+.FormDate h5{
+  text-align: center;
+  font-size: 1.5rem;
+  margin:1rem
 
 }
-
-
-.hovered {
-  border-block-start: 3px solid;
-  border-image-slice: 1;
-  animation: gradient;
-  animation-duration: 1s;
-  animation-iteration-count: infinite;
+.FormDate>input{
+  width: 5rem;
+  margin-right: 1rem !important;
+  padding: 0;
+  text-align: center;
+}
+.FormDate>input:last-child{
+  margin-right: 0 !important;
+}
+.TodoPage__modal select{
+  .select();
+  width: 100%;
+}
+.TodoPage__modal input{
+  margin-right: 0;
+  margin-bottom: 1rem;
+}
+.TodoPage__modal button{
+  .button();
+  transition: all 0.5s;
+}
+.TodoPage__modal button:hover{
+  transform: scale(1.1);
+  background: blue;
+}
+.TodoPage__modal button:disabled{
+  background: gray;
+}
+.TodoPage__modal button:disabled:hover{
+  transform: scale(1);
 }
 
-@keyframes gradient {
-  0% {
-    border-image-source: linear-gradient(90deg, orange 50%, black 50%);
-  }
-  50% {
-    border-image-source: linear-gradient(90deg, black 50%, orange 50%);
-  }
-  100% {
-    border-image-source: linear-gradient(90deg, orange 50%, black 50%);
-  }
-}
