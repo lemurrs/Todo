@@ -11,15 +11,18 @@
     opacity: 0;
     pointer-events: none;
     transition: 0.5s;
+    z-index: 1000;
 }
 .modal__content{
+    color: #eeeeee;
     padding: 20px;
     border-radius: 12px;
-    background-color: white;
+    background-color: #363030;
     max-width: content-box;
     min-height: 250px;
     transform:scale(0.5);
     transition: 0.4s;
+    margin: 1rem;
 
 }
 .modal.active{
@@ -29,14 +32,4 @@
 .modal__content.active{
 transform: scale(1);
 }
-.Purple{
-    background-color: #092143;
 
-}
-@media screen and (max-width:454px) {
-    .modal__content{
-        width: 300px;
-        height: 200px;
-    }
-
-}

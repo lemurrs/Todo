@@ -1,5 +1,12 @@
 @import "../../../less/Mixins";
 
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+
 .TodoPage__title {
   .title()
 }
@@ -10,31 +17,42 @@
   flex-direction: column;
   padding: 1rem;
 }
-.TodoPage__todoCreator>button:first-child{
+
+.TodoPage__todoCreator > button:first-child {
   margin-bottom: 1rem;
 }
-.TodoPage__todoCreator>button{
+
+.TodoPage__todoCreator > button {
   width: 100%;
 }
-svg{
+
+svg {
   width: 40px;
   height: 40px;
   cursor: pointer;
+
 }
-.infoSvg{
+
+.infoSvg {
   position: absolute;
   top: 1rem;
   right: 1rem;
   fill: whitesmoke;
 }
-.Project{
-  position: relative;
+
+p {
+  word-break: break-all
 }
+
+.Project {
+  position: relative;
+  word-break: break-all;
+}
+
 input {
   .todos();
   padding-left: 1.5rem;
   margin-right: 2rem;
-  word-break: break-all;
 }
 
 input:focus,
@@ -44,7 +62,7 @@ input:active {
 
 .TodoPage {
   border-radius: 1rem;
-  max-width: 1500px;
+  max-width: 1200px;
   margin: 1rem auto;
 }
 
@@ -55,22 +73,29 @@ input:active {
 }
 
 .TodoPage__button:hover {
-  background: blue;
+  background: @Button-hoverBackgroundColor;
   transform: scale(1.05);
 }
 
 .activeItem {
   background: mediumpurple !important;
 }
-.BackArrow{
+
+.BackArrow {
   position: absolute;
-  top: 28%;
-  left: 8%;
+  top: 15%;
+  left: 5%;
   fill: whitesmoke;
 }
-.test{
+
+.BackArrow:hover {
+  transform: scale(1.1);
+}
+
+.test {
   margin-top: 1rem;
 }
+
 .todo {
   position: relative;
   word-break: break-all;
@@ -91,7 +116,7 @@ input:active {
 }
 
 
-.info__info{
+.info__info {
   position: relative;
   margin: 1rem;
   padding: 0 1rem;
@@ -99,47 +124,96 @@ input:active {
   background: #444343;
   border-radius: 1rem;
 }
-.InfoForm select{
+
+.InfoForm input {
+  margin-bottom: 1rem;
+}
+.InfoForm{
+  display: flex;
+  flex-direction: column;
+}
+.InfoForm p {
+  margin: 0;
+}
+
+.InfoForm select {
+  margin-bottom: 1rem;
   .select()
 }
-.InfoForm button{
+
+.InfoForm button {
   .button();
   margin-bottom: 1rem;
   transition-duration: .5s;
 }
-.InfoForm button:hover{
-  background: blue;
+
+.InfoForm button:hover {
+  background: @Button-hoverBackgroundColor;
   transform: scale(1.1);
 }
-.InfoForm button:disabled{
+
+.InfoForm button:disabled {
   background: gray;
 }
-.InfoForm button:disabled:hover{
+
+.InfoForm button:disabled:hover {
   transform: scale(1);
 }
 
-.info__info h2{
+.info__info h2 {
   text-align: center;
 }
+
 .todo__delete svg {
   width: 1.5rem;
   height: 1.5rem;
-  transition: all 0.2s
+  transition: all 0.2s;
 }
 
 .todo__delete svg:hover {
   transform: scale(1.3);
 }
-.TodoPage__ExtraTasks{
-  width: 33%;
+
+.TodoPage__AboutTodo {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1rem;
   padding: 1rem;
   border-radius: 1rem;
   color: white;
   margin-top: 1rem;
-  background: #313131;
-  text-align: center;
 }
-.ExtraTasks__task{
+
+.TodoPage__AboutTodo > div {
+
+  .animated(divCreated);
+  background: @Div-backgroundColor;
+  border-radius: 1rem;
+  margin: 0;
+  padding: 1rem;
+}
+
+.TodoPage__AboutTodo input,
+.TodoPage__AboutTodo button {
+  .animated(created)
+}
+
+.TodoPage__AboutTodo > div:nth-child(2) {
+  .animatedTiming(0.2s)
+}
+
+.TodoPage__AboutTodo > div:nth-child(3) {
+  .animatedTiming(0.4s)
+}
+
+.TodoPage__AboutTodo > div h3 {
+  text-align: center;
+  margin: 0;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+}
+
+.ExtraTasks__task {
   background: #494848;
   width: max-content;
   display: flex;
@@ -147,18 +221,24 @@ input:active {
   margin-bottom: 1rem;
   padding: 1rem;
   border-radius: 1rem;
+
 }
-.TodoPage__info {
-  display: grid;
-  grid-template-columns: 1fr 2fr 2fr 2fr;
-  grid-template-rows: 2fr  1fr;
-  background: #313131;
+
+@keyframes divCreated {
+  0% {
+    transform: translateY(100rem);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+
+.info__dragDrop {
+  background: @Div-backgroundColor;
   border-radius: 1rem;
-}
-
-
-.TodoPage__info > div {
   color: white;
+  margin: 0 1rem;
 }
 
 .info__create {
@@ -167,19 +247,19 @@ input:active {
 
 .info__comments {
   margin: 1rem;
-  grid-column: 5/-1;
-  grid-row: 1/3;
   padding: 1rem;
   background: #444343;
   border-radius: 1rem;
 }
-.info__comments h3{
+
+.info__comments h3 {
   text-align: center;
   font-size: 1.5rem;
   margin: 0;
   margin-bottom: 1rem;
 }
-.info__comments button{
+
+.info__comments button {
   background: none;
   outline: none;
   border: none;
@@ -187,12 +267,14 @@ input:active {
   cursor: pointer;
   font-size: 1rem;
 }
-.info__comments button:disabled{
+
+.info__comments button:disabled {
   display: none;
 }
-.info__comments input{
 
-  margin: 0;
+.info__comments input {
+
+  width: 100%;
 }
 
 .info__extraTodo {
@@ -200,7 +282,7 @@ input:active {
   grid-row: 2/3;
 }
 
-//dragDrop css
+
 .info__dragDrop {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -210,42 +292,74 @@ input:active {
   padding: 1rem;
   gap: 1rem;
 }
-.TodoPage__NewTaskBlock{
+
+.AboutTodo__extra {
   display: flex;
+  flex-direction: column;
 }
-.TodoPage__NewTaskBlock input{
+
+@keyframes created {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.AboutTodo__extra p {
+  width: 100%;
+}
+
+.extra__createTask {
+  display: flex;
+  flex-direction: column;
+}
+
+.extra__createTask input {
   margin-right: 0.5rem;
+  width: 100%;
+  margin-bottom: 0.5rem;
 }
-.TodoPage__NewTaskBlock button{
+
+.extra__createTask button {
   .button();
   font-size: 1rem;
   transition-duration: 0.5s;
+  height: 2rem;
 }
-.TodoPage__NewTaskBlock button:hover{
+
+.extra__createTask button:hover {
   transform: scale(1.15);
-  background: blue
+  background: @Button-hoverBackgroundColor
 }
-.TodoPage__NewTaskBlock button:disabled{
+
+.extra__createTask button:disabled {
   background: gray;
 }
-.TodoPage__NewTaskBlock button:disabled:hover{
+
+.extra__createTask button:disabled:hover {
   transform: scale(1);
 }
-.info__dragDrop .Board:first-child{
+
+.info__dragDrop .Board:first-child {
+
   padding: 1rem;
   border: 1px solid red;
-  background: rgba(255,0,0,0.1);
+  background: rgba(255, 0, 0, 0.1);
   border-radius: 1rem;
 }
-.info__dragDrop .Board:nth-child(2){
+
+.info__dragDrop .Board:nth-child(2) {
   border: 1px solid blue;
-  background: rgba(0,0,255,0.1);
+  background: rgba(0, 0, 255, 0.1);
   padding: 1rem;
   border-radius: 1rem;
 }
-.info__dragDrop .Board:nth-child(3){
+
+.info__dragDrop .Board:nth-child(3) {
   border: 1px solid green;
-  background: rgba(0,255,0,0.1);
+  background: rgba(0, 255, 0, 0.1);
   padding: 1rem;
   border-radius: 1rem;
 }
@@ -259,6 +373,11 @@ input:active {
 
 .info__dragDrop > div > div {
   margin-top: 1rem;
+}
+
+.info__dragDrop > div > div:first-child {
+  font-size: 1.5rem;
+  margin-top: 0;
 }
 
 .colHeader {
@@ -296,45 +415,120 @@ input:active {
   width: 150px;
   height: 50vh
 }
-.TodoPage__modal{
-  .flex();
-  flex-direction: column;
-}
-.FormDate h5{
+
+.TodoPage__modal {
   text-align: center;
-  font-size: 1.5rem;
-  margin:1rem
+}
+
+.TodoPage__modal input:first-child {
+  margin-right: 1rem;
+}
+
+.TodoPage__modal input {
+  width: 100%;
 
 }
-.FormDate>input{
+
+.FormDate h5 {
+  text-align: center;
+  font-size: 1.5rem;
+  margin: 1rem
+
+}
+
+.FormDate > input {
   width: 5rem;
   margin-right: 1rem !important;
   padding: 0;
   text-align: center;
 }
-.FormDate>input:last-child{
+
+.FormDate > input:last-child {
   margin-right: 0 !important;
 }
-.TodoPage__modal select{
+
+.TodoPage__modal select {
   .select();
   width: 100%;
 }
-.TodoPage__modal input{
+
+.TodoPage__modal input {
   margin-right: 0;
   margin-bottom: 1rem;
 }
-.TodoPage__modal button{
+
+.TodoPage__modal button {
   .button();
   transition: all 0.5s;
 }
-.TodoPage__modal button:hover{
+
+.TodoPage__modal button:hover {
   transform: scale(1.1);
-  background: blue;
+  background: @Button-hoverBackgroundColor
 }
-.TodoPage__modal button:disabled{
+
+.TodoPage__modal button:disabled {
   background: gray;
 }
-.TodoPage__modal button:disabled:hover{
+
+.TodoPage__modal button:disabled:hover {
   transform: scale(1);
+}
+
+.TodoPage__createTodo {
+  position: relative;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.TodoPage__filterTodo {
+  margin: 1rem;
+  display: flex;
+
+}
+
+.TodoPage__filterTodo input:last-child {
+  margin-right: 0;
+}
+@media screen and (max-width: 794px){
+  .TodoPage__filterTodo input:first-child{
+    margin-right: 0;
+    margin-bottom: 1rem;
+  }
+  .TodoPage__filterTodo{
+    flex-direction: column;
+  }
+
+  input{
+    font-size: 1.2rem
+  }
+
+  .info__comments p{
+    font-size: 0.9rem;
+  }
+  .Board div{
+    font-size: 0.9rem;
+  }
+
+  .extra__createTask button {
+    .button();
+    font-size: 0.9rem;
+    transition-duration: 0.5s;
+    height: 2rem;
+  }
+  h3{
+    font-size: 1rem !important;
+  }
+  svg{
+    width: 30px;
+  }
+  .TodoPage__AboutTodo {
+    grid-template-columns: 1fr;
+  }
+
+  .info__dragDrop {
+    grid-template-columns: 1fr
+
+  }
 }
 

@@ -1,5 +1,12 @@
 @import "Vars";
-
+.animated(@animation){
+  animation: @animation 1s ease;
+  backface-visibility: hidden;
+}
+.animatedTiming(@timing){
+  animation-delay: @timing;
+  animation-fill-mode: backwards;
+}
 .title() {
   font-size: 5rem;
   text-align: center;
@@ -15,7 +22,7 @@
 }
 
 .button() {
-  background: #1E6F9F;
+  background: @Button-backgroundColor;
   border-radius: 8px;
   height: 4rem;
   border: none;
@@ -31,7 +38,6 @@
   border: none;
   color: white;
   min-height: 4rem;
-  width: 91.5%;
   padding-left: 1rem;
 }
 
@@ -40,7 +46,7 @@
   border: 1px solid #494848;
   border-radius: 8px;
   flex: 1;
-  min-height: 4rem;
+  min-height: 3rem;
   color: white;
-  font-size: 2rem;
+  font-size: 1.5rem;
 }

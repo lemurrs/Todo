@@ -9,11 +9,14 @@ import svg from '../../../common/svg/symbol-defs.svg'
 import FileUploader from "../../../Components/FileUploader/FileUploader";
 
 
+function TodoPage({ProjectData, SetTodoCreator, ChangeStatus, ChangeTodo, AddExtraTask, addCommentCreator, saveReply}) {
 
-function TodoPage({ProjectData, SetTodoCreator, ChangeStatus,ChangeTodo,AddExtraTask,addCommentCreator,saveReply}) {
-
+    const navigate = useNavigate()
     const loc = useLocation()
+
     const pathName = loc.pathname.replace('/', '')
+    const currentProject = ProjectData.filter(el => el.name === pathName)[0]
+
     const [activeModal, setActiveModal] = useState(false)
 
     function ModalForm() {
@@ -24,14 +27,16 @@ function TodoPage({ProjectData, SetTodoCreator, ChangeStatus,ChangeTodo,AddExtra
         const [DateHours, setDateHours] = useState('')
         const [DateMinutes, setDateMinutes] = useState('')
         const [uploadedFiles, setUploadedFiles] = useState([])
+
         function HandleSubmit(e) {
             e.preventDefault()
             const priority = document.getElementById('priority').value
             const created = moment().format('MMMM Do YYYY, h:mm:ss a');
             const deadLine = moment().add(DateDays, 'days').add(DateHours, 'hours').add(DateMinutes, 'minutes').format("MMMM Do YYYY, h:mm:ss a")
-            SetTodoCreator(pathName, ProjectData.filter(el => el.name === pathName)[0].Todo.length + 1, title, description, priority, created, deadLine,uploadedFiles)
+            SetTodoCreator(pathName, currentProject.Todo.length + 1, title, description, priority, created, deadLine, uploadedFiles)
             setActiveModal(false)
         }
+
         return (
             <form className={c.TodoPage__modal} onSubmit={(e) => HandleSubmit(e)}>
                 <input value={title} onChange={(e) => {
@@ -49,7 +54,7 @@ function TodoPage({ProjectData, SetTodoCreator, ChangeStatus,ChangeTodo,AddExtra
                     <option value={'Not urgent and not important'} label="Not urgent and not important"/>
                 </select>
                 <div className={c.FormDate}>
-                    <h5 >Deadline</h5>
+                    <h5>Deadline</h5>
                     <input type={"number"} placeholder={'dd'} min={0} value={DateDays} onChange={(e) => {
                         setDateDays(e.target.value)
                     }}/>
@@ -62,26 +67,43 @@ function TodoPage({ProjectData, SetTodoCreator, ChangeStatus,ChangeTodo,AddExtra
                 </div>
                 <FileUploader uploadedFiles={uploadedFiles} setUploadedFiles={setUploadedFiles}/>
 
-                <button disabled={(!DateDays && !DateHours && !DateMinutes) || !title || !description || !document.getElementById('priority').value}>Save</button>
+                <button
+                    disabled={(!DateDays && !DateHours && !DateMinutes) || (!title && !description && !document.getElementById('priority').value)}>Save
+                </button>
             </form>
         )
     }
 
 
-    let [QueuedTodo, setQueuedTodo] = useState()
-    let [DevelopmentTodo, setDevelopmentTodo] = useState()
-    let [DoneTodo, setDoneTodo] = useState('')
+    const [filterTitle, setFilterTitle] = useState('')
+    const [filterId, setFilterId] = useState('')
+    let filteredResult = currentProject.Todo;
 
-    if (ProjectData.filter(el => el.name === pathName)[0].Todo) {
-        QueuedTodo = ProjectData.filter(el => el.name === pathName)[0].Todo.filter(el => el.status === 'Queue')
-        DevelopmentTodo = ProjectData.filter(el => el.name === pathName)[0].Todo.filter(el => el.status === 'Development')
-        DoneTodo = ProjectData.filter(el => el.name === pathName)[0].Todo.filter(el => el.status === 'Done')
+    if (filterId) filteredResult = (filteredResult.filter(todo => {
+        return todo.id === filterId
+    }))
+    if (filterTitle) filteredResult = (filteredResult.filter(todo => {
+        return todo.title.includes(filterTitle)
+    }))
+
+    let QueuedTodo;
+    let DevelopmentTodo;
+    let DoneTodo;
+
+    if (currentProject.Todo && !filteredResult) {
+        QueuedTodo = currentProject.Todo.filter(el => el.status === 'Queue')
+        DevelopmentTodo = currentProject.Todo.filter(el => el.status === 'Development')
+        DoneTodo = currentProject.Todo.filter(el => el.status === 'Done')
+    } else if (filteredResult) {
+        QueuedTodo = filteredResult.filter(el => el.status === 'Queue')
+        DevelopmentTodo = filteredResult.filter(el => el.status === 'Development')
+        DoneTodo = filteredResult.filter(el => el.status === 'Done')
     }
 
     let [ActiveTodo, setActiveTodo] = useState(null)
     const [TodoId, setTodoId] = useState(null)
-    const [extraTask,setExtraTask]=useState('')
-    const [comment,setComment]=useState('')
+    const [extraTask, setExtraTask] = useState('')
+    const [comment, setComment] = useState('')
     let [boards, setBoards] = useState([
         {id: 1, text: 'Queue', todos: QueuedTodo},
         {id: 2, text: 'Development', todos: DevelopmentTodo},
@@ -92,17 +114,13 @@ function TodoPage({ProjectData, SetTodoCreator, ChangeStatus,ChangeTodo,AddExtra
     boards[1].todos = DevelopmentTodo
     boards[2].todos = DoneTodo
 
-
     const [currentBoard, setCurrentBoard] = useState(null)
     const [currentItem, setCurrentItem] = useState(null)
-
-    const navigate = useNavigate()
 
     function dragStartHandler(e, board, todo) {
         setCurrentBoard(board)
         setCurrentItem(todo)
         setTodoId(todo.id)
-
     }
 
     function dragLeaveHandler(e) {
@@ -119,7 +137,6 @@ function TodoPage({ProjectData, SetTodoCreator, ChangeStatus,ChangeTodo,AddExtra
     function dragEndHandler(e, todo) {
         e.target.style.boxShadow = 'none'
         setTodoId(todo.id)
-
     }
 
     function dropHandler(e, board, todo) {
@@ -155,63 +172,80 @@ function TodoPage({ProjectData, SetTodoCreator, ChangeStatus,ChangeTodo,AddExtra
         }))
         ChangeStatus(pathName, TodoId, board.text)
     }
-    const addExtraTaskHandler = (extraTask)=>{
-        console.log(extraTask)
-        AddExtraTask(pathName,TodoId,extraTask)
+
+    const addExtraTaskHandler = (extraTask) => {
+        AddExtraTask(pathName, TodoId, extraTask)
 
     }
 
-    ActiveTodo = ProjectData.filter(el => el.name === pathName)[0].Todo.filter(el => el.id === TodoId)
-    console.log(ActiveTodo[0])
+    ActiveTodo = currentProject.Todo.filter(el => el.id === TodoId)
     return (<section className={c.TodoPage}>
-        <div className={c.TodoPage__info}>
-            <div className={c.info__info}>
-                <h2>Todo Info</h2>
-                {ActiveTodo[0]&& <TodoInfo ActiveTodo={ActiveTodo[0]} pathName={pathName} ChangeTodo={ChangeTodo}/>}
-            </div>
-            <div className={c.info__create}>
-                <div className={c.TodoPage__todoCreator}>
-                    <button className={c.TodoPage__button} onClick={() => setActiveModal(true)}>Create Todo</button>
-                    <div className={c.TodoPage__NewTaskBlock}>
-                        <input placeholder={'Task'} value={extraTask} onChange={e=>{
-                            setExtraTask(e.target.value)}}/>  <button disabled={!TodoId || !extraTask} onClick={()=>{addExtraTaskHandler(extraTask) ; setExtraTask('')}}>Create Task</button>
-                    </div>
+        <div className={c.TodoPage__createTodo}>
+            <button className={c.TodoPage__button} onClick={() => setActiveModal(true)}>Create Todo</button>
+            <svg onClick={() => navigate('/')} className={c.BackArrow}>
+                <use xlinkHref={svg + '#icon-arrow-left2'}></use>
+            </svg>
+        </div>
+        <div className={c.TodoPage__filterTodo}>
+            <input value={filterId} onChange={(e) => setFilterId(+e.target.value)} placeholder={'id'} type={'number'}/>
+            <input value={filterTitle} onChange={(e) => setFilterTitle(e.target.value)} placeholder={'title'}/>
+        </div>
+        <div className={c.info__dragDrop}>
+            {boards.map(board => <div className={c.Board} onDragOver={(e) => dragOverHandler(e)}
+                                      onDrop={(e) => dropCardHandler(e, board)}>
+                    <div className={c.Board__title}>{board.text}</div>
+                    {board.todos.map(todo =>
+                        <div className={`${c.item} ${todo.id === TodoId ? c.activeItem : undefined}`} draggable="true"
+                             onDragStart={(e) => dragStartHandler(e, board, todo)}
+                             onDragLeave={(e) => dragLeaveHandler(e)}
+                             onDragEnd={(e) => dragEndHandler(e, todo)}
+                             onDragOver={(e) => dragOverHandler(e)}
+                             onDrop={(e) => dropHandler(e, board, todo)}
+                        >{todo.title}</div>
+                    )}
                 </div>
-            </div>
-            <div className={c.info__dragDrop}>
-                {boards.map(board => <div className={c.Board} onDragOver={(e) => dragOverHandler(e)}
-                                          onDrop={(e) => dropCardHandler(e, board)}>
-                        <div className={c.Board__title}>{board.text}</div>
-                        {board.todos.map(todo =>
-                            <div className={`${c.item} ${todo.id === TodoId ? c.activeItem : undefined}`} draggable="true"
-                                 onDragStart={(e) => dragStartHandler(e, board, todo)}
-                                 onDragLeave={(e) => dragLeaveHandler(e)}
-                                 onDragEnd={(e) => dragEndHandler(e, todo)}
-                                 onDragOver={(e) => dragOverHandler(e)}
-                                 onDrop={(e) => dropHandler(e, board, todo)}
-                            >{todo.title}</div>
-                        )}
-                    </div>
-                )}
-            </div>
-
-            <div className={c.info__comments}>
-                <h3>Comments: </h3>
-                <input type={'text'} value={comment} onChange={e=>setComment(e.target.value)}/>
-                 <button disabled={!TodoId || !comment} onClick={()=>{addCommentCreator(pathName,TodoId,ActiveTodo[0].comments.length+1,comment) ; setComment('')}}>add comment</button>
-                { TodoId && ActiveTodo[0].comments.map(comment=><Comments id={comment.id} text={comment.text} addCommentCreator={addCommentCreator} pathName={pathName} TodoId={TodoId} ActiveTodo={ActiveTodo[0].comments} saveReply={saveReply}/>)}
-            </div>
+            )}
         </div>
 
-        <svg onClick={() => navigate('/')} className={c.BackArrow}>
-            <use xlinkHref={svg+'#icon-arrow-left2'}></use>
-        </svg>
         <Modal active={activeModal} setActive={setActiveModal}>
             <ModalForm/>
         </Modal>
-        <div className={c.TodoPage__ExtraTasks}>
-            <h3>Extra Tasks</h3>
-            {TodoId && ActiveTodo[0].extraTasks.map(el=><p className={c.ExtraTasks__task}>{el}</p>)}
+        <div className={c.TodoPage__AboutTodo}>
+            <div className={c.AboutTodo__extra}>
+                <h3>Extra Tasks</h3>
+                <div className={c.extra__tasks}>
+                    {TodoId && ActiveTodo[0].extraTasks.map(el => <p className={c.ExtraTasks__task}>{el}</p>)}
+                </div>
+                <div className={c.extra__createTask} style={{display: !TodoId ? 'none' : 'flex'}}>
+                    <input placeholder={'Task'} value={extraTask} onChange={e => {
+                        setExtraTask(e.target.value)
+                    }}/>
+                    <button disabled={!TodoId || !extraTask} onClick={() => {
+                        addExtraTaskHandler(extraTask);
+                        setExtraTask('')
+                    }}>Create Task
+                    </button>
+                </div>
+            </div>
+            <div className={c.info__info}>
+                <h3>Todo Info</h3>
+                {ActiveTodo[0] && <TodoInfo ActiveTodo={ActiveTodo[0]} pathName={pathName} ChangeTodo={ChangeTodo}/>}
+            </div>
+            <div className={c.info__comments}>
+                <h3>Comments </h3>
+                <input type={'text'} value={comment} onChange={e => setComment(e.target.value)}
+                       style={{display: !TodoId && 'none'}}/>
+                <button disabled={!TodoId || !comment} onClick={() => {
+                    addCommentCreator(pathName, TodoId, ActiveTodo[0].comments.length + 1, comment);
+                    setComment('')
+                }}>add comment
+                </button>
+                {TodoId && ActiveTodo[0].comments.map(comment => <Comments id={comment.id} text={comment.text}
+                                                                           addCommentCreator={addCommentCreator}
+                                                                           pathName={pathName} TodoId={TodoId}
+                                                                           ActiveTodo={ActiveTodo[0].comments}
+                                                                           saveReply={saveReply}/>)}
+            </div>
         </div>
     </section>)
 

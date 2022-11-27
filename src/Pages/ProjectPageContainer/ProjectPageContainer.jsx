@@ -12,5 +12,5 @@ let mapStateToProps = (state) => ({
     ProjectData: state.ProjectPage.ProjectData
 })
 
-export default connect(mapStateToProps, {ProjectCreator})(ProjectPageContainer)
+export default React.memo(connect(mapStateToProps, {ProjectCreator})(ProjectPageContainer))
 

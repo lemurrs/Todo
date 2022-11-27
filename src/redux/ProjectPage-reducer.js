@@ -5,13 +5,8 @@ const CHANGE_STATUS = 'CHANGE-STATUS'
 const CHANGE_TODO='CHANGE-TODO'
 const ADD_EXTRA='ADD-EXTRA'
 const ADD_COMMENT='ADD-COMMENT'
-const SAVE_REPLY='SAVE-REPLY'
 let initialState = {
-    ProjectData: [{
-        name: 'FirstProject',
-        Todo: [],
-    },
-    ],
+    ProjectData: [],
 }
 const projectPageReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -42,29 +37,7 @@ const projectPageReducer = (state = initialState, action) => {
 
 
             }
-        case SAVE_REPLY:
-            return {
-                ...state,ProjectData: state.ProjectData.map(el => {
-                    if (el.name !== action.name) {
-                        return el
-                    }
-                    return {
-                        ...el,
-                        Todo: el.Todo.map(el => {
-                            if (el.id !== action.id) {
-                                return el
-                            }
-                            return {
-                                ...el,
-                                replys:[...el.replys, {
-                                    id:action.replyId,
-                                    text:action.reply
-                                }]
-                            }
-                        })
-                    }
-                })
-            }
+
         case ADD_EXTRA:
             return {
                 ...state, ProjectData: state.ProjectData.map(el => {
@@ -111,32 +84,6 @@ const projectPageReducer = (state = initialState, action) => {
             })
 
         }}
-        // case ADD_COMMENT:{
-        //     return {
-        //         ...state,ProjectData: state.ProjectData.map(el => {
-        //             if (el.name !== action.name) {
-        //                 return el
-        //             }
-        //             return {
-        //                 ...el,
-        //                 Todo: el.Todo.map(el => {
-        //                     if (el.id !== action.id) {
-        //                         return el
-        //                     }
-        //                     return {
-        //                         ...el,
-        //                         comments:[...el.comments,{
-        //                             id:action.commentId,
-        //                             text:action.text,
-        //                         }]
-        //
-        //                     }
-        //                 })
-        //             }
-        //         })
-        //
-        //     }}
-
 
         case CREATE_PROJECT:
             return {
@@ -196,14 +143,6 @@ const projectPageReducer = (state = initialState, action) => {
             return state
     }
 }
-export let saveReply=(name,id,replyId,reply)=>({
-    type:SAVE_REPLY,
-    name:name,
-    id:id,
-    replyId:replyId,
-    reply:reply,
-
-})
 export let addCommentCreator=(name,id,commentId,text)=>({
     type: ADD_COMMENT,
     name:name,
@@ -250,7 +189,7 @@ export let ChangeTodo=(name,id,title,description,priority,deadLine)=>({
     title:title,
     description:description,
     priority:priority,
-    deadLine:deadLine
+    deadLine:deadLine,
 })
 
 export default projectPageReducer

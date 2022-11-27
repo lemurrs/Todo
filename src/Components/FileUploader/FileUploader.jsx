@@ -35,7 +35,6 @@ import c from "./FileUploader.module.less";
 
 
             <input className={c.fileUploader} id='fileUpload' type='file' multiple
-                   accept='application/pdf, image/png'
                    onChange={handleFileEvent}
                    disabled={fileLimit}
             />

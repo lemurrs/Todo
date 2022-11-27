@@ -10,15 +10,21 @@
   width: 100%;
   transition: all .5s ease;
 }
-
+input{
+  .todos() ;
+  padding-left: 1.5rem;
+}
+select{
+  .todos()
+}
 .ProjectPage{
-  max-width: 1500px;
+  max-width: 1200px;
   margin: 0 auto;
 }
 
 .Project h1 {
-  color: black;
   word-break: break-all;
+  color: black;
   padding: 3rem;
   margin: 0;
 }
@@ -27,7 +33,7 @@
 }
 .Project:before{
   content: '';
-  width: 2px;
+  width: 5px;
   height: 100%;
   background: beige;
   position: absolute;
@@ -37,15 +43,10 @@
   border-radius: 100%;
 }
 .Project:hover:before{
-  animation: choosenProject;
-  animation-duration: 1s;
-  animation-timing-function: ease;
-  backface-visibility: hidden;
-
+.animated(choosenProject);
+  animation-duration: 1.5s;
 }
 @keyframes glow {
-
-
   0%{
     box-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #6e495d, 0 0 40px #ffdb4d, 0 0 50px #ffdb4d, 0 0 60px #ffdb4d, 0 0 70px #ffdb4d;
   }
@@ -84,7 +85,7 @@
   padding: 1rem;
   display: grid;
   gap: 1rem;
-  grid-template-columns: repeat(4,minmax(min-content,1fr));
+  grid-template-rows: 1fr;
   grid-auto-flow: row;
 }
 .ProjectPage__form{
