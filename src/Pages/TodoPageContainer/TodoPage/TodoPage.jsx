@@ -9,7 +9,7 @@ import svg from '../../../common/svg/symbol-defs.svg'
 import FileUploader from "../../../Components/FileUploader/FileUploader";
 
 
-function TodoPage({ProjectData, SetTodoCreator, ChangeStatus, ChangeTodo, AddExtraTask, addCommentCreator, saveReply}) {
+function TodoPage({ProjectData, SetTodoCreator, ChangeStatus, ChangeTodo, AddExtraTask, addCommentCreator}) {
 
     const navigate = useNavigate()
     const loc = useLocation()
@@ -191,7 +191,7 @@ function TodoPage({ProjectData, SetTodoCreator, ChangeStatus, ChangeTodo, AddExt
             <input value={filterTitle} onChange={(e) => setFilterTitle(e.target.value)} placeholder={'title'}/>
         </div>
         <div className={c.info__dragDrop}>
-            {boards.map(board => <div className={c.Board} onDragOver={(e) => dragOverHandler(e)}
+            {boards.map(board => <div className={c.Board} key={board.text.length} onDragOver={(e) => dragOverHandler(e)}
                                       onDrop={(e) => dropCardHandler(e, board)}>
                     <div className={c.Board__title}>{board.text}</div>
                     {board.todos.map(todo =>
@@ -201,6 +201,7 @@ function TodoPage({ProjectData, SetTodoCreator, ChangeStatus, ChangeTodo, AddExt
                              onDragEnd={(e) => dragEndHandler(e, todo)}
                              onDragOver={(e) => dragOverHandler(e)}
                              onDrop={(e) => dropHandler(e, board, todo)}
+                             key={todo.id}
                         >{todo.title}</div>
                     )}
                 </div>
@@ -240,11 +241,10 @@ function TodoPage({ProjectData, SetTodoCreator, ChangeStatus, ChangeTodo, AddExt
                     setComment('')
                 }}>add comment
                 </button>
-                {TodoId && ActiveTodo[0].comments.map(comment => <Comments id={comment.id} text={comment.text}
+                {TodoId && ActiveTodo[0].comments.map(comment => <Comments id={comment.id} key={comment.id} text={comment.text}
                                                                            addCommentCreator={addCommentCreator}
                                                                            pathName={pathName} TodoId={TodoId}
-                                                                           ActiveTodo={ActiveTodo[0].comments}
-                                                                           saveReply={saveReply}/>)}
+                                                                           ActiveTodo={ActiveTodo[0].comments}/>)}
             </div>
         </div>
     </section>)

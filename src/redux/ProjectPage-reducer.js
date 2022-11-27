@@ -89,6 +89,7 @@ const projectPageReducer = (state = initialState, action) => {
             return {
                 ...state,
                 ProjectData: [...state.ProjectData, {
+                    id:action.id,
                     name: action.name,
                     Todo: [],
                 }]
@@ -171,9 +172,10 @@ export let AddExtraTask=(name,id,extra)=>({
     name:name,
     id:id,
 })
-export let ProjectCreator = (name) => ({
+export let ProjectCreator = (name,id) => ({
     type: CREATE_PROJECT,
     name: name,
+    id:id,
 })
 export let ChangeStatus = (name, id, status) => ({
     type: CHANGE_STATUS,

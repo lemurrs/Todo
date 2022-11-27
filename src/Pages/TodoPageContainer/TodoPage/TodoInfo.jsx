@@ -79,7 +79,7 @@ function TodoInfo({
                 <p><b>Dead line: </b>{ActiveTodo.deadLine}</p>
                 <p><b>Status: </b> {ActiveTodo.status} </p>
                 <p><b>In progress: </b>{duration.hours}:{duration.minutes}:{duration.seconds}</p>
-                <p><b>Uploaded files: </b>
+                <b>Uploaded files: </b>
                     <div className={c.fileUploader__fileName}>
                         {ActiveTodo.files.map(file => {
                             let objectURL = URL.createObjectURL(file);
@@ -89,7 +89,7 @@ function TodoInfo({
                             )
                         })}
                     </div>
-                </p>
+
             </div> :
             <TodoInfoForm ChangeTodo={ChangeTodo}/>
 
