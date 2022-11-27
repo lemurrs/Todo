@@ -17,14 +17,18 @@ function TodoInfo({
                       }
                       , ChangeTodo, pathName
                   }) {
-    useEffect(()=>{
-        const interval = setInterval(()=>{
-            setDuration(Time(Math.floor(moment.duration(moment().diff(moment(ActiveTodo.created,'MMMM Do YYYY, h:mm:ss a'))).asSeconds())))
-        },1000)
-        return ()=>clearInterval(interval)
-    },[ActiveTodo])
     const [change, setChange] = useState(false)
     const [duration,setDuration]=useState('')
+     useEffect(()=>{
+         let interval;
+         if(!change){
+             interval = setInterval(()=>{
+                 setDuration(Time(Math.floor(moment.duration(moment().diff(moment(ActiveTodo.created,'MMMM Do YYYY, h:mm:ss a'))).asSeconds())))
+             },1000)
+         }
+        return ()=>clearInterval(interval)
+    },[ActiveTodo,change])
+
 
     const TodoInfoForm = ({ChangeTodo}) => {
         const [title, setTitle] = useState(ActiveTodo.title)
