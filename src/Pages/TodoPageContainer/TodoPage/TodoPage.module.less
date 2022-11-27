@@ -128,10 +128,12 @@ input:active {
 .InfoForm input {
   margin-bottom: 1rem;
 }
-.InfoForm{
+
+.InfoForm {
   display: flex;
   flex-direction: column;
 }
+
 .InfoForm p {
   margin: 0;
 }
@@ -481,6 +483,11 @@ input:active {
   text-align: center;
 }
 
+.fileUploader__fileName {
+  text-align: center;
+  margin-top: 1rem;
+}
+
 .TodoPage__filterTodo {
   margin: 1rem;
   display: flex;
@@ -490,23 +497,26 @@ input:active {
 .TodoPage__filterTodo input:last-child {
   margin-right: 0;
 }
-@media screen and (max-width: 794px){
-  .TodoPage__filterTodo input:first-child{
+
+@media screen and (max-width: 794px) {
+  .TodoPage__filterTodo input:first-child {
     margin-right: 0;
     margin-bottom: 1rem;
   }
-  .TodoPage__filterTodo{
+
+  .TodoPage__filterTodo {
     flex-direction: column;
   }
 
-  input{
+  input {
     font-size: 1.2rem
   }
 
-  .info__comments p{
+  .info__comments p {
     font-size: 0.9rem;
   }
-  .Board div{
+
+  .Board div {
     font-size: 0.9rem;
   }
 
@@ -516,12 +526,15 @@ input:active {
     transition-duration: 0.5s;
     height: 2rem;
   }
-  h3{
+
+  h3 {
     font-size: 1rem !important;
   }
-  svg{
+
+  svg {
     width: 30px;
   }
+
   .TodoPage__AboutTodo {
     grid-template-columns: 1fr;
   }

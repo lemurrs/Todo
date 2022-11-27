@@ -1,9 +1,8 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import c from "./TodoPage.module.less";
 import moment from "moment";
 import svg from '../../../common/svg/symbol-defs.svg'
-
-
+import Time from "../../../common/TimerLogic/TimerLogic";
 function TodoInfo({
                       ActiveTodo = {
                           id: 0,
@@ -13,11 +12,19 @@ function TodoInfo({
                           created: 'today',
                           deadLine: 'Tomorrow',
                           status: 'Queued',
-                          extraTasks: []
+                          extraTasks: [],
+                          files:[],
                       }
                       , ChangeTodo, pathName
                   }) {
+    useEffect(()=>{
+        const interval = setInterval(()=>{
+            setDuration(Time(Math.floor(moment.duration(moment().diff(moment(ActiveTodo.created,'MMMM Do YYYY, h:mm:ss a'))).asSeconds())))
+        },1000)
+        return ()=>clearInterval(interval)
+    },[ActiveTodo])
     const [change, setChange] = useState(false)
+    const [duration,setDuration]=useState('')
 
     const TodoInfoForm = ({ChangeTodo}) => {
         const [title, setTitle] = useState(ActiveTodo.title)
@@ -57,34 +64,9 @@ function TodoInfo({
             <button disabled={(!DateDays && !DateHours && !DateMinutes) || !priority}>Save</button>
         </form>
     }
-    let BorderColor
-    switch (ActiveTodo.priority) {
-
-        case "Urgent and important": {
-            BorderColor = 'red'
-            break;
-        }
-        case "Urgent": {
-            BorderColor = 'orange'
-            break;
-        }
-        case "Important": {
-            BorderColor = 'green'
-            break;
-        }
-        case "Not urgent and not important": {
-            BorderColor = 'blue'
-            break;
-        }
-        default: {
-            BorderColor = 'black'
-            break;
-        }
-
-    }
 
     return (<>
-        {!change ? <div  className={c.Project} style={{borderColor: BorderColor}}>
+        {!change ? <div  className={c.Project}>
                 <p> <b>Number: </b>{ActiveTodo.id}</p>
                 <p><b>Title: </b>{ActiveTodo.title}</p>
                 <p><b>Description: </b>{ActiveTodo.description}</p>
@@ -92,13 +74,14 @@ function TodoInfo({
                 <p><b>Created: </b>{ActiveTodo.created}</p>
                 <p><b>Dead line: </b>{ActiveTodo.deadLine}</p>
                 <p><b>Status: </b> {ActiveTodo.status} </p>
+                <p><b>In progress: </b>{duration.hours}:{duration.minutes}:{duration.seconds}</p>
                 <p><b>Uploaded files: </b>
                     <div className={c.fileUploader__fileName}>
                         {ActiveTodo.files.map(file => {
                             let objectURL = URL.createObjectURL(file);
 
                             return (
-                                <a href={objectURL} download={file.name}>{file.name}</a>
+                                <a style={{color:'white'}} href={objectURL} download={file.name}>{file.name}</a>
                             )
                         })}
                     </div>

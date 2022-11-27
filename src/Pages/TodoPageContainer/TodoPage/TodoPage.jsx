@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import c from './TodoPage.module.less'
 import {useLocation, useNavigate} from "react-router-dom";
 import moment from "moment/moment";
