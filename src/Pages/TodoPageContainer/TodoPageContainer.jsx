@@ -5,17 +5,17 @@ import {
     addCommentCreator,
     AddExtraTask,
     ChangeStatus,
-    ChangeTodo,
+    ChangeTodo, SetExtraAsDoneCreator,
     SetTodoCreator
 } from "../../redux/ProjectPage-reducer";
 
 
-const TodoPageContainer = ({SetTodoCreator, ProjectData, ChangeStatus,ChangeTodo,AddExtraTask,addCommentCreator}) => {
-    return (<TodoPage SetTodoCreator={SetTodoCreator} ProjectData={ProjectData} ChangeStatus={ChangeStatus} ChangeTodo={ChangeTodo} AddExtraTask={AddExtraTask} addCommentCreator={addCommentCreator}/>)
+const TodoPageContainer = ({SetTodoCreator, ProjectData, ChangeStatus,ChangeTodo,AddExtraTask,addCommentCreator,SetExtraAsDoneCreator}) => {
+    return (<TodoPage SetTodoCreator={SetTodoCreator} ProjectData={ProjectData} ChangeStatus={ChangeStatus} ChangeTodo={ChangeTodo} AddExtraTask={AddExtraTask} addCommentCreator={addCommentCreator} SetExtraAsDoneCreator={SetExtraAsDoneCreator}/>)
 }
 let mapStateToProps = (state) => ({
     ProjectData: state.ProjectPage.ProjectData
 })
 
-export default React.memo(connect(mapStateToProps, {SetTodoCreator, ChangeStatus,ChangeTodo,AddExtraTask,addCommentCreator})(TodoPageContainer))
+export default React.memo(connect(mapStateToProps, {SetTodoCreator, ChangeStatus,ChangeTodo,AddExtraTask,addCommentCreator,SetExtraAsDoneCreator})(TodoPageContainer))
 

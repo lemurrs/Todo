@@ -7,9 +7,11 @@ import Modal from "../../../Components/Modal/Modal";
 import Comments from "./Comments/Comments";
 import svg from '../../../common/svg/symbol-defs.svg'
 import FileUploader from "../../../Components/FileUploader/FileUploader";
+import ExtraTask from "../../../Components/ExtraTask/ExtraTask";
+import {SetExtraAsDoneCreator} from "../../../redux/ProjectPage-reducer";
 
 
-function TodoPage({ProjectData, SetTodoCreator, ChangeStatus, ChangeTodo, AddExtraTask, addCommentCreator}) {
+function TodoPage({ProjectData, SetTodoCreator, ChangeStatus, ChangeTodo, AddExtraTask, addCommentCreator,SetExtraAsDoneCreator}) {
 
     const navigate = useNavigate()
     const loc = useLocation()
@@ -174,7 +176,7 @@ function TodoPage({ProjectData, SetTodoCreator, ChangeStatus, ChangeTodo, AddExt
     }
 
     const addExtraTaskHandler = (extraTask) => {
-        AddExtraTask(pathName, TodoId, extraTask)
+        AddExtraTask(pathName, TodoId, extraTask,ActiveTodo[0].extraTasks.length+1)
 
     }
 
@@ -215,7 +217,7 @@ function TodoPage({ProjectData, SetTodoCreator, ChangeStatus, ChangeTodo, AddExt
             <div className={c.AboutTodo__extra}>
                 <h3>Extra Tasks</h3>
                 <div className={c.extra__tasks}>
-                    {TodoId && ActiveTodo[0].extraTasks.map(el => <p className={c.ExtraTasks__task}>{el}</p>)}
+                    {TodoId && ActiveTodo[0].extraTasks.map(el => <ExtraTask TodoId={TodoId} pathName={pathName} key={el.id} text={el.text} status={el.status} id={el.id} SetExtraAsDoneCreator={SetExtraAsDoneCreator}/>)}
                 </div>
                 <div className={c.extra__createTask} style={{display: !TodoId ? 'none' : 'flex'}}>
                     <input placeholder={'Task'} value={extraTask} onChange={e => {

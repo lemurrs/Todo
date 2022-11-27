@@ -28,7 +28,7 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
     "start": "react-scripts-less start",
-    "build": "reactgit-scripts-less build",
+    "build": "react-scripts-less build",
     "test": "react-scripts-less test",
     "eject": "react-scripts eject"
   },

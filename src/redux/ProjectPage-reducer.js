@@ -5,6 +5,7 @@ const CHANGE_STATUS = 'CHANGE-STATUS'
 const CHANGE_TODO='CHANGE-TODO'
 const ADD_EXTRA='ADD-EXTRA'
 const ADD_COMMENT='ADD-COMMENT'
+const SET_EXTRA_AS_DONE='SET-EXTRA-AS-DONE'
 let initialState = {
     ProjectData: [],
 }
@@ -37,7 +38,35 @@ const projectPageReducer = (state = initialState, action) => {
 
 
             }
+        case SET_EXTRA_AS_DONE:
+            return {
+                ...state, ProjectData: state.ProjectData.map(el => {
+                    if (el.name !== action.name) {
+                        return el
+                    }
+                    return {
+                        ...el,
+                        Todo: el.Todo.map(el => {
+                            if (el.id !== action.id) {
+                                return el
+                            }
+                            return {
+                                ...el,
+                                extraTasks:el.extraTasks.map(task=>{
+                                    if(task.id!==action.taskId){
+                                        return task
+                                    }
+                                    return {
+                                        ...task,
+                                        status:'Done'
+                                    }
+                                })
+                            }
+                        })
+                    }
+                })
 
+            }
         case ADD_EXTRA:
             return {
                 ...state, ProjectData: state.ProjectData.map(el => {
@@ -52,7 +81,12 @@ const projectPageReducer = (state = initialState, action) => {
                             }
                             return {
                                 ...el,
-                                extraTasks:[...el.extraTasks,action.extra]
+                                extraTasks:[...el.extraTasks,
+                                    {
+                                        text:action.extra,
+                                        id:action.extraId,
+                                        status:'todo'
+                                    }]
                             }
                         })
                     }
@@ -152,6 +186,12 @@ export let addCommentCreator=(name,id,commentId,text)=>({
     text:text
 
 })
+export let SetExtraAsDoneCreator=(name,id,taskId)=>({
+    type:SET_EXTRA_AS_DONE,
+    name:name,
+    id:id,
+    taskId:taskId
+})
 export let SetTodoCreator = (name, id, title, description, priority, created, deadLine,files=[]) => ({
     type: SET_TODO,
     name: name,
@@ -166,11 +206,12 @@ export let SetTodoCreator = (name, id, title, description, priority, created, de
     comments:[],
     files:files
 })
-export let AddExtraTask=(name,id,extra)=>({
+export let AddExtraTask=(name,id,extra,extraId)=>({
     type: ADD_EXTRA,
     extra:extra,
     name:name,
     id:id,
+    extraId:extraId,
 })
 export let ProjectCreator = (name,id) => ({
     type: CREATE_PROJECT,
@@ -184,6 +225,7 @@ export let ChangeStatus = (name, id, status) => ({
     status: status
 
 })
+
 export let ChangeTodo=(name,id,title,description,priority,deadLine)=>({
     type:CHANGE_TODO,
     name:name,

@@ -82,7 +82,14 @@ function TodoInfo({
                 <b>Uploaded files: </b>
                     <div className={c.fileUploader__fileName}>
                         {ActiveTodo.files.map(file => {
-                            let objectURL = URL.createObjectURL(file);
+                            let objectURL;
+                            try{
+                                objectURL = URL.createObjectURL(file);
+                            }catch (e) {
+                                console.log('something wrong')
+                            }
+                            console.log(ActiveTodo)
+
 
                             return (
                                 <a style={{color:'white'}} href={objectURL} download={file.name}>{file.name}</a>
