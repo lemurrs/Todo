@@ -88,7 +88,6 @@ function TodoInfo({
                             }catch (e) {
                                 console.log('something wrong')
                             }
-                            console.log(ActiveTodo)
 
 
                             return (

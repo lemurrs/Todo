@@ -8,16 +8,17 @@ import Comments from "./Comments/Comments";
 import svg from '../../../common/svg/symbol-defs.svg'
 import FileUploader from "../../../Components/FileUploader/FileUploader";
 import ExtraTask from "../../../Components/ExtraTask/ExtraTask";
-import {SetExtraAsDoneCreator} from "../../../redux/ProjectPage-reducer";
+import Todo from "./Todo/Todo";
 
 
-function TodoPage({ProjectData, SetTodoCreator, ChangeStatus, ChangeTodo, AddExtraTask, addCommentCreator,SetExtraAsDoneCreator}) {
+function TodoPage({ProjectData, SetTodoCreator, ChangeStatus, ChangeTodo, AddExtraTask, addCommentCreator,SetExtraAsDoneCreator,DeleteTodo}) {
 
     const navigate = useNavigate()
     const loc = useLocation()
 
     const pathName = loc.pathname.replace('/', '')
     const currentProject = ProjectData.filter(el => el.name === pathName)[0]
+    let [TodoLength,setTodoLenght]=useState(1)
 
     const [activeModal, setActiveModal] = useState(false)
 
@@ -35,7 +36,8 @@ function TodoPage({ProjectData, SetTodoCreator, ChangeStatus, ChangeTodo, AddExt
             const priority = document.getElementById('priority').value
             const created = moment().format('MMMM Do YYYY, h:mm:ss a');
             const deadLine = moment().add(DateDays, 'days').add(DateHours, 'hours').add(DateMinutes, 'minutes').format("MMMM Do YYYY, h:mm:ss a")
-            SetTodoCreator(pathName, currentProject.Todo.length + 1, title, description, priority, created, deadLine, uploadedFiles)
+            SetTodoCreator(pathName, TodoLength, title, description, priority, created, deadLine, uploadedFiles)
+            setTodoLenght(TodoLength+1)
             setActiveModal(false)
         }
 
@@ -197,14 +199,7 @@ function TodoPage({ProjectData, SetTodoCreator, ChangeStatus, ChangeTodo, AddExt
                                       onDrop={(e) => dropCardHandler(e, board)}>
                     <div className={c.Board__title}>{board.text}</div>
                     {board.todos.map(todo =>
-                        <div className={`${c.item} ${todo.id === TodoId ? c.activeItem : undefined}`} draggable="true"
-                             onDragStart={(e) => dragStartHandler(e, board, todo)}
-                             onDragLeave={(e) => dragLeaveHandler(e)}
-                             onDragEnd={(e) => dragEndHandler(e, todo)}
-                             onDragOver={(e) => dragOverHandler(e)}
-                             onDrop={(e) => dropHandler(e, board, todo)}
-                             key={todo.id}
-                        >{todo.title}</div>
+                        <Todo setTodoId={setTodoId} pathName={pathName} DeleteTodo={DeleteTodo} svg={svg} todo={todo} TodoId={TodoId} board={board} dragStartHandler={dragStartHandler} dragLeaveHandler={dragLeaveHandler} dragEndHandler={dragEndHandler} dragOverHandler={dragOverHandler} dropHandler={dropHandler}/>
                     )}
                 </div>
             )}
@@ -217,7 +212,7 @@ function TodoPage({ProjectData, SetTodoCreator, ChangeStatus, ChangeTodo, AddExt
             <div className={c.AboutTodo__extra}>
                 <h3>Extra Tasks</h3>
                 <div className={c.extra__tasks}>
-                    {TodoId && ActiveTodo[0].extraTasks.map(el => <ExtraTask TodoId={TodoId} pathName={pathName} key={el.id} text={el.text} status={el.status} id={el.id} SetExtraAsDoneCreator={SetExtraAsDoneCreator}/>)}
+                    {TodoId &&  ActiveTodo[0].extraTasks.map(el => <ExtraTask TodoId={TodoId} pathName={pathName} key={el.id} text={el.text} status={el.status} id={el.id} SetExtraAsDoneCreator={SetExtraAsDoneCreator}/>)}
                 </div>
                 <div className={c.extra__createTask} style={{display: !TodoId ? 'none' : 'flex'}}>
                     <input placeholder={'Task'} value={extraTask} onChange={e => {

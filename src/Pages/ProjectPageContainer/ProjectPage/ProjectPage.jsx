@@ -9,17 +9,20 @@ function ProjectPage({ProjectData, ProjectCreator}) {
 
     function ModalForm() {
         const [title, setTitle] = useState('')
-
+        const [error,setError]=useState(false)
         function HandleSubmit(e) {
             e.preventDefault()
-            ProjectCreator(title, ProjectData.length + 1)
-            setModalActive(false)
+            if(ProjectData.every((project)=>project.name!==title)){
+                ProjectCreator(title, ProjectData.length + 1)
+                setModalActive(false)
+            } else setError(true)
         }
         return (<form className={c.ProjectPage__form} onSubmit={(e) => HandleSubmit(e)}>
-            <input value={title} pattern={"[A-Za-z0-9]+"} title="Only english alphabet" onChange={(e) => {
+            <input style={{border:error&&'1px solid red'}} value={title} pattern={"[A-Za-z0-9]+"} title="Only english alphabet" onChange={(e) => {
                 setTitle(e.target.value)
             }} type={'text'} placeholder={'Name Project'}/>
             <button disabled={!title}>Save</button>
+            {error&&<p style={{color:'white',fontSize:'1.2rem',borderBottom:'1px solid red'}}>Only unique project names</p>}
         </form>)
     }
     return (<section className={c.ProjectPage}>

@@ -6,11 +6,13 @@ const CHANGE_TODO='CHANGE-TODO'
 const ADD_EXTRA='ADD-EXTRA'
 const ADD_COMMENT='ADD-COMMENT'
 const SET_EXTRA_AS_DONE='SET-EXTRA-AS-DONE'
+const DELETE_TODO='DELETE-TODO'
 let initialState = {
     ProjectData: [],
 }
 const projectPageReducer = (state = initialState, action) => {
     switch (action.type) {
+
         case SET_TODO:
             return {
                 ...state, ProjectData: state.ProjectData.map(el => {
@@ -67,6 +69,19 @@ const projectPageReducer = (state = initialState, action) => {
                 })
 
             }
+        case DELETE_TODO:
+            debugger;
+            return {
+                ...state, ProjectData: state.ProjectData.map(project => {
+                    return{
+                        ...project,
+                        Todo:project.Todo.filter((todo)=>todo.id!==action.id)
+
+                    }
+                    }
+                )}
+
+
         case ADD_EXTRA:
             return {
                 ...state, ProjectData: state.ProjectData.map(el => {
@@ -192,6 +207,7 @@ export let SetExtraAsDoneCreator=(name,id,taskId)=>({
     id:id,
     taskId:taskId
 })
+
 export let SetTodoCreator = (name, id, title, description, priority, created, deadLine,files=[]) => ({
     type: SET_TODO,
     name: name,
@@ -224,6 +240,11 @@ export let ChangeStatus = (name, id, status) => ({
     id: id,
     status: status
 
+})
+export let DeleteTodo=(name,id)=>({
+    type:DELETE_TODO,
+    name:name,
+    id:id,
 })
 
 export let ChangeTodo=(name,id,title,description,priority,deadLine)=>({
