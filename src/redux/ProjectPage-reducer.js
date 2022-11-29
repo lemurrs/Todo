@@ -125,6 +125,7 @@ const projectPageReducer = (state = initialState, action) => {
                                 comments:[...el.comments,{
                                     id:action.commentId,
                                     text:action.text,
+                                    parentId:action.parentId
                                 }]
 
                             }
@@ -193,12 +194,13 @@ const projectPageReducer = (state = initialState, action) => {
             return state
     }
 }
-export let addCommentCreator=(name,id,commentId,text)=>({
+export let addCommentCreator=(name,id,commentId,text,parentId)=>({
     type: ADD_COMMENT,
     name:name,
     id:id,
     commentId:commentId,
-    text:text
+    text:text,
+    parentId:parentId
 
 })
 export let SetExtraAsDoneCreator=(name,id,taskId)=>({

@@ -89,7 +89,7 @@ function DragDrop({setTodoId,pathName,DeleteTodo,svg,TodoId,ChangeStatus,current
                                   onDrop={(e) => dropCardHandler(e, board)}>
                 <div className={c.Board__title}>{board.text}</div>
                 {board.todos.map(todo =>
-                    <Todo setTodoId={setTodoId} pathName={pathName} DeleteTodo={DeleteTodo} svg={svg} todo={todo} TodoId={TodoId} board={board} dragStartHandler={dragStartHandler} dragLeaveHandler={dragLeaveHandler} dragEndHandler={dragEndHandler} dragOverHandler={dragOverHandler} dropHandler={dropHandler}/>
+                    <Todo setTodoId={setTodoId} pathName={pathName} key={todo.id} DeleteTodo={DeleteTodo} svg={svg} todo={todo} TodoId={TodoId} board={board} dragStartHandler={dragStartHandler} dragLeaveHandler={dragLeaveHandler} dragEndHandler={dragEndHandler} dragOverHandler={dragOverHandler} dropHandler={dropHandler}/>
                 )}
             </div>
         )}

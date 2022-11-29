@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import c from './TodoPage.module.less'
 import {useLocation, useNavigate} from "react-router-dom";
 import Modal from "../../../Components/Modal/Modal";
@@ -60,7 +60,7 @@ function TodoPage({
             <ModalForm pathName={pathName} setActiveModal={setActiveModal} SetTodoCreator={SetTodoCreator}
                        currentProject={currentProject}/>
         </Modal>
-        <AboutTodo pathName={pathName} TodoId={TodoId} ActiveTodo={ActiveTodo} ChangeTodo={ChangeTodo} AddExtraTask={AddExtraTask} addCommentCreator={addCommentCreator} SetExtraAsDoneCreator={SetExtraAsDoneCreator}/>
+        {TodoId &&  <AboutTodo pathName={pathName} TodoId={TodoId} ActiveTodo={ActiveTodo} ChangeTodo={ChangeTodo} AddExtraTask={AddExtraTask} addCommentCreator={addCommentCreator} SetExtraAsDoneCreator={SetExtraAsDoneCreator} currentProject={currentProject}/>}
     </section>)
 
 }

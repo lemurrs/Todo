@@ -1,16 +1,23 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import c from "../TodoPage.module.less";
 import ExtraTask from "../ExtraTask/ExtraTask";
-import TodoInfo from "../TodoInfo";
+import TodoInfo from "../TodoInfo/TodoInfo";
 import Comments from "../Comments/Comments";
 
-function AboutTodo({TodoId, ActiveTodo, pathName, SetExtraAsDoneCreator, AddExtraTask, ChangeTodo, addCommentCreator}) {
+function AboutTodo({TodoId, ActiveTodo, pathName, SetExtraAsDoneCreator, AddExtraTask, ChangeTodo, addCommentCreator,currentProject}) {
 
     const [extraTask, setExtraTask] = useState('')
     const [comment, setComment] = useState('')
+    const[Tasklength,setTaskLength]=useState( ActiveTodo[0].extraTasks.length+1)
+    const [CommentLength,setCommentLength]=useState(ActiveTodo[0].comments.length+1)
+    useEffect(()=>{
+        setCommentLength(ActiveTodo[0].extraTasks.length+1)
+        setTaskLength(ActiveTodo[0].comments.length+1)
+    },[ActiveTodo[0].id])
 
     const addExtraTaskHandler = (extraTask) => {
-        AddExtraTask(pathName, TodoId, extraTask, ActiveTodo[0].extraTasks.length + 1)
+        AddExtraTask(pathName, TodoId, extraTask, Tasklength)
+        setTaskLength(Tasklength+1)
 
     }
     return <div className={c.TodoPage__AboutTodo}>
@@ -35,22 +42,25 @@ function AboutTodo({TodoId, ActiveTodo, pathName, SetExtraAsDoneCreator, AddExtr
         </div>
         <div className={c.info__info}>
             <h3>Todo Info</h3>
-            {ActiveTodo[0] && <TodoInfo ActiveTodo={ActiveTodo[0]} pathName={pathName} ChangeTodo={ChangeTodo}/>}
+            {ActiveTodo[0] && <TodoInfo ActiveTodo={ActiveTodo[0]} pathName={pathName} ChangeTodo={ChangeTodo} TodoId={TodoId}/>}
         </div>
         <div className={c.info__comments}>
             <h3>Comments </h3>
             <input type={'text'} value={comment} onChange={e => setComment(e.target.value)}
                    style={{display: !TodoId && 'none'}}/>
             <button disabled={!TodoId || !comment} onClick={() => {
-                addCommentCreator(pathName, TodoId, ActiveTodo[0].comments.length + 1, comment);
+                addCommentCreator(pathName, TodoId,CommentLength, comment);
+                setCommentLength(CommentLength+1)
                 setComment('')
             }}>add comment
             </button>
-            {TodoId && ActiveTodo[0].comments.map(comment => <Comments id={comment.id} key={comment.id}
+            {TodoId && ActiveTodo[0].comments.filter(el=>el.parentId===undefined).map(comment => <Comments id={comment.id} key={comment.id}
                                                                        text={comment.text}
                                                                        addCommentCreator={addCommentCreator}
                                                                        pathName={pathName} TodoId={TodoId}
-                                                                       ActiveTodo={ActiveTodo[0].comments}/>)}
+                                                                       ActiveTodo={ActiveTodo[0].comments}
+                                                                       CommentLength={CommentLength}
+                                                                       setCommentLength={setCommentLength}/>)}
         </div>
     </div>
 }

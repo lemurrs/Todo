@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react'
-import c from "./TodoPage.module.less";
+import c from "../TodoPage.module.less";
 import moment from "moment";
-import svg from '../../../common/svg/symbol-defs.svg'
-import Time from "../../../common/TimerLogic/TimerLogic";
+import svg from '../../../../common/svg/symbol-defs.svg'
+import Time from "../../../../common/TimerLogic/TimerLogic";
 function TodoInfo({
                       ActiveTodo = {
                           id: 0,
@@ -15,7 +15,7 @@ function TodoInfo({
                           extraTasks: [],
                           files:[],
                       }
-                      , ChangeTodo, pathName
+                      , ChangeTodo, pathName,TodoId
                   }) {
     const [change, setChange] = useState(false)
     const [duration,setDuration]=useState('')
@@ -81,7 +81,7 @@ function TodoInfo({
                 <p><b>In progress: </b>{duration.hours}:{duration.minutes}:{duration.seconds}</p>
                 <b>Uploaded files: </b>
                     <div className={c.fileUploader__fileName}>
-                        {ActiveTodo.files.map(file => {
+                        {TodoId && ActiveTodo.files.map(file => {
                             let objectURL;
                             try{
                                 objectURL = URL.createObjectURL(file);
