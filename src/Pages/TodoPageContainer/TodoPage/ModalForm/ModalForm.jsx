@@ -15,12 +15,26 @@ function ModalForm({SetTodoCreator, pathName, setActiveModal, currentProject}) {
 
     function HandleSubmit(e) {
         e.preventDefault()
+
+        //values needed to create todo
         const priority = document.getElementById('priority').value
         const created = moment().format('MMMM Do YYYY, h:mm:ss a');
         const deadLine = moment().add(DateDays, 'days').add(DateHours, 'hours').add(DateMinutes, 'minutes').format("MMMM Do YYYY, h:mm:ss a")
+
+        //SetTodoCreator ->ActionCreator to dispatch todo, setTodoLength -> id
         SetTodoCreator(pathName, TodoLength, title, description, priority, created, deadLine, uploadedFiles)
         setTodoLenght(TodoLength + 1)
         setActiveModal(false)
+
+        //set Default value
+        setTitle('')
+        setDescr('')
+        setDateMinutes('')
+        setDateHours('')
+        setDateDays('')
+        setUploadedFiles([])
+        document.getElementById('priority').value=''
+
     }
 
     return (

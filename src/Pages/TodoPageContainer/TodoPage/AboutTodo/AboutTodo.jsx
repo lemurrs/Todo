@@ -46,15 +46,17 @@ function AboutTodo({TodoId, ActiveTodo, pathName, SetExtraAsDoneCreator, AddExtr
         </div>
         <div className={c.info__comments}>
             <h3>Comments </h3>
+            <div className={c.comments__wrapper}>
             <input type={'text'} value={comment} onChange={e => setComment(e.target.value)}
                    style={{display: !TodoId && 'none'}}/>
-            <button disabled={!TodoId || !comment} onClick={() => {
+            <button className={c.comments__WriteCommentButton} disabled={!TodoId || !comment} onClick={() => {
                 addCommentCreator(pathName, TodoId,CommentLength, comment);
                 setCommentLength(CommentLength+1)
                 setComment('')
-            }}>add comment
+            }}>Comment
             </button>
-            {TodoId && ActiveTodo[0].comments.filter(el=>el.parentId===undefined).map(comment => <Comments id={comment.id} key={comment.id}
+            </div>
+            {TodoId && ActiveTodo[0].comments.filter(el=>el.parentId===undefined).reverse().map(comment => <Comments id={comment.id} key={comment.id}
                                                                        text={comment.text}
                                                                        addCommentCreator={addCommentCreator}
                                                                        pathName={pathName} TodoId={TodoId}

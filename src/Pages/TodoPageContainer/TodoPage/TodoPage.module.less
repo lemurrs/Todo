@@ -178,12 +178,18 @@ input:active {
 
 .TodoPage__AboutTodo {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
   gap: 1rem;
   padding: 1rem;
   border-radius: 1rem;
   color: white;
   margin-top: 1rem;
+  overflow: hidden;
+}
+.info__comments{
+  grid-row: 2/-1;
+  grid-column: 1/-1;
 }
 
 .TodoPage__AboutTodo > div {
@@ -237,38 +243,6 @@ input:active {
   grid-column: 1/2;
 }
 
-.info__comments {
-  margin: 1rem;
-  padding: 1rem;
-  background: #444343;
-  border-radius: 1rem;
-}
-
-.info__comments h3 {
-  text-align: center;
-  font-size: 1.5rem;
-  margin: 0;
-  margin-bottom: 1rem;
-}
-
-.info__comments button {
-  background: none;
-  outline: none;
-  border: none;
-  color: deepskyblue;
-  cursor: pointer;
-  font-size: 1rem;
-}
-
-.info__comments button:disabled {
-  display: none;
-}
-
-.info__comments input {
-
-  width: 100%;
-}
-
 .info__extraTodo {
   grid-column: 2/5;
   grid-row: 2/3;
@@ -307,7 +281,35 @@ input:active {
   display: flex;
   flex-direction: column;
 }
-
+.comments__wrapper{
+  border-radius: 2px;
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-template-rows: auto auto;
+}
+.comments__wrapper>input{
+  border-radius: 0;
+  grid-column: 1/-1;
+  width: 100%;
+  border: none;
+  border-bottom: 2px solid white;
+  margin: 0;
+  margin-bottom: 0.5rem;
+}
+.comments__wrapper>button{
+  border-radius: 1rem;
+  grid-row: 2/3;
+  grid-column: 2/3;
+  border: none;
+  justify-self: end;
+  margin-bottom: 0.5rem;
+  font-size: 1.2rem;
+  font-weight: 50;
+  padding: 0.5rem;
+}
+.comments__wrapper>button:disabled{
+  color: #e0e0e0;
+}
 .extra__createTask input {
   margin-right: 0.5rem;
   width: 100%;
