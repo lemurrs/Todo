@@ -1,6 +1,6 @@
 import React, {useState} from "react";
-import c from "../TodoPage.module.less";
-import Todo from "../Todo/Todo";
+import c from "../../TodoPage.module.less";
+import Todo from "../../Todo/Todo";
 
 function DragDrop({setTodoId,pathName,DeleteTodo,svg,TodoId,ChangeStatus,currentProject,filteredResult}){
 

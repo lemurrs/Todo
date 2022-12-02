@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react'
-import c from "../TodoPage.module.less";
+import c from "../../../TodoPage.module.less";
 import moment from "moment";
-import svg from '../../../../common/svg/symbol-defs.svg'
-import Time from "../../../../common/TimerLogic/TimerLogic";
+import svg from '../../../../../../common/svg/symbol-defs.svg'
+import Time from "../../../../../../common/TimerLogic/TimerLogic";
 function TodoInfo({
                       ActiveTodo = {
                           id: 0,
@@ -86,7 +86,7 @@ function TodoInfo({
                             try{
                                 objectURL = URL.createObjectURL(file);
                             }catch (e) {
-                                console.log('something wrong')
+                                objectURL=null;
                             }
 
 

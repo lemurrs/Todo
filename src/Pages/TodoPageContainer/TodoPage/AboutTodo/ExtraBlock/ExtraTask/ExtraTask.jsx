@@ -1,6 +1,6 @@
 import React from "react";
 import c from "./ExtraTask.module.less"
-import svg from '../../../../common/svg/symbol-defs.svg'
+import svg from '../../../../../../common/svg/symbol-defs.svg'
 
 function ExtraTask({text,status,id,SetExtraAsDoneCreator,pathName,TodoId}){
 
