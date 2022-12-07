@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import c from "../TodoPage.module.less";
 import DragDrop from "./DragDrop/DragDrop";
 import svg from "../../../../common/svg/symbol-defs.svg";
-import {ITodo, Project} from "../../../../Interfaces";
+import {Project} from "../../../../Interfaces";
 import {ActionCreator} from "redux";
 import {ChangeStatusType, DeleteTodoType} from "../../../../Types";
 

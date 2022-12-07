@@ -5,13 +5,15 @@ import FileUploader from "../../../../Components/FileUploader/FileUploader";
 import {ActionCreator} from "redux";
 import {SetTodoCreatorType} from "../../../../Types";
 import {Project} from "../../../../Interfaces";
-type Props={
-    SetTodoCreator:ActionCreator<SetTodoCreatorType>,
-    pathName:string,
-    setActiveModal:(a:boolean)=>void,
-    currentProject:Project
+
+type Props = {
+    SetTodoCreator: ActionCreator<SetTodoCreatorType>,
+    pathName: string,
+    setActiveModal: (a: boolean) => void,
+    currentProject: Project
 }
-function ModalForm({SetTodoCreator, pathName, setActiveModal, currentProject}:Props) {
+
+function ModalForm({SetTodoCreator, pathName, setActiveModal, currentProject}: Props) {
 
     const [title, setTitle] = useState('')
     const [description, setDescr] = useState('')
@@ -19,9 +21,8 @@ function ModalForm({SetTodoCreator, pathName, setActiveModal, currentProject}:Pr
     const [DateHours, setDateHours] = useState('')
     const [DateMinutes, setDateMinutes] = useState('')
     const [uploadedFiles, setUploadedFiles] = useState<File[]>([])
-    const [TodoLength, setTodoLenght] = useState(currentProject.Todo.length + 1 || 1)
 
-    function HandleSubmit(e:React.FormEvent) {
+    function HandleSubmit(e: React.FormEvent) {
         e.preventDefault()
 
         //values needed to create todo
@@ -30,8 +31,7 @@ function ModalForm({SetTodoCreator, pathName, setActiveModal, currentProject}:Pr
         const deadLine = moment().add(DateDays, 'days').add(DateHours, 'hours').add(DateMinutes, 'minutes').format("MMMM Do YYYY, h:mm:ss a")
 
         //SetTodoCreator ->ActionCreator to dispatch todo, setTodoLength -> id
-        SetTodoCreator(pathName, TodoLength, title, description, priority, created, deadLine, uploadedFiles)
-        setTodoLenght(TodoLength + 1)
+        SetTodoCreator(pathName, title, description, priority, created, deadLine, uploadedFiles)
         setActiveModal(false)
 
         //set Default value
@@ -43,7 +43,7 @@ function ModalForm({SetTodoCreator, pathName, setActiveModal, currentProject}:Pr
         setDateDays('')
 
         setUploadedFiles([])
-       // (document.getElementById('priority') as HTMLInputElement).value=''
+        // (document.getElementById('priority') as HTMLInputElement).value=''
 
 
     }

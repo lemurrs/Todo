@@ -15,6 +15,8 @@ export const ADD_COMMENT='ADD-COMMENT'
 export const SET_EXTRA_AS_DONE='SET-EXTRA-AS-DONE'
 export const DELETE_TODO='DELETE-TODO'
 
+
+
 let initialState = {
     ProjectData: [] as Array<Project>
 }
@@ -26,11 +28,13 @@ const projectPageReducer = (state = initialState, action:any):InitialStateType =
             return {
                 ...state, ProjectData: state.ProjectData.map(el => {
                         if (el.name !== action.name) return el
+                    let id : number = el.Todo[0] ? el.Todo[el.Todo.length-1].id+1 : 1
+                    debugger;
                         return {
                             ...el,
                             Todo: [...el.Todo,
                                 {
-                                    id: action.id,
+                                    id: id,
                                     title: action.title,
                                     description: action.description,
                                     priority: action.priority,
@@ -220,10 +224,9 @@ export let SetExtraAsDoneCreator=(name:string,id:number,taskId:number):SetExtraA
     taskId:taskId
 })
 
-export let SetTodoCreator = (name:string, id:number, title:string, description:string, priority:string, created:Date, deadLine:Date,files:File):SetTodoCreatorType => ({
+export let SetTodoCreator = (name:string, title:string, description:string, priority:string, created:Date, deadLine:Date,files:File):SetTodoCreatorType => ({
     type: SET_TODO,
     name: name,
-    id: id,
     title: title,
     description: description,
     priority: priority,

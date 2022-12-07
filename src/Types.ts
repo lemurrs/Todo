@@ -44,7 +44,6 @@ export type SetExtraAsDoneCreatorType={
 export type SetTodoCreatorType={
     type:typeof SET_TODO,
     name: string,
-    id: number,
     title: string,
     description: string,
     priority: string,

@@ -49,6 +49,7 @@ const DragDrop:React.FC<Props>=({setTodoId,pathName,DeleteTodo,svg,TodoId,Change
         setCurrentItem(todo)
         setTodoId(todo.id)
     }
+    console.log(boards)
 
     function dragLeaveHandler(e:React.DragEvent) {
         (e.target as HTMLDivElement).style.boxShadow = 'none'
