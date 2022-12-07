@@ -2,22 +2,30 @@ import React, {useState} from "react";
 import moment from "moment";
 import c from "../TodoPage.module.less";
 import FileUploader from "../../../../Components/FileUploader/FileUploader";
-
-function ModalForm({SetTodoCreator, pathName, setActiveModal, currentProject}) {
+import {ActionCreator} from "redux";
+import {SetTodoCreatorType} from "../../../../Types";
+import {Project} from "../../../../Interfaces";
+type Props={
+    SetTodoCreator:ActionCreator<SetTodoCreatorType>,
+    pathName:string,
+    setActiveModal:(a:boolean)=>void,
+    currentProject:Project
+}
+function ModalForm({SetTodoCreator, pathName, setActiveModal, currentProject}:Props) {
 
     const [title, setTitle] = useState('')
     const [description, setDescr] = useState('')
     const [DateDays, setDateDays] = useState('')
     const [DateHours, setDateHours] = useState('')
     const [DateMinutes, setDateMinutes] = useState('')
-    const [uploadedFiles, setUploadedFiles] = useState([])
+    const [uploadedFiles, setUploadedFiles] = useState<File[]>([])
     const [TodoLength, setTodoLenght] = useState(currentProject.Todo.length + 1 || 1)
 
-    function HandleSubmit(e) {
+    function HandleSubmit(e:React.FormEvent) {
         e.preventDefault()
 
         //values needed to create todo
-        const priority = document.getElementById('priority').value
+        const priority = (document.getElementById('priority') as HTMLInputElement).value
         const created = moment().format('MMMM Do YYYY, h:mm:ss a');
         const deadLine = moment().add(DateDays, 'days').add(DateHours, 'hours').add(DateMinutes, 'minutes').format("MMMM Do YYYY, h:mm:ss a")
 
@@ -27,13 +35,16 @@ function ModalForm({SetTodoCreator, pathName, setActiveModal, currentProject}) {
         setActiveModal(false)
 
         //set Default value
+
         setTitle('')
         setDescr('')
         setDateMinutes('')
         setDateHours('')
         setDateDays('')
+
         setUploadedFiles([])
-        document.getElementById('priority').value=''
+       // (document.getElementById('priority') as HTMLInputElement).value=''
+
 
     }
 
@@ -68,7 +79,7 @@ function ModalForm({SetTodoCreator, pathName, setActiveModal, currentProject}) {
             <FileUploader uploadedFiles={uploadedFiles} setUploadedFiles={setUploadedFiles}/>
 
             <button
-                disabled={(!DateDays && !DateHours && !DateMinutes) || (!title && !description && !document.getElementById('priority').value)}>Save
+                disabled={(!DateDays && !DateHours && !DateMinutes) || (!title && !description && !(document.getElementById('priority') as HTMLInputElement).value)}>Save
             </button>
         </form>
     )

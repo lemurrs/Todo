@@ -1,7 +1,18 @@
 import React, {useEffect, useState} from "react";
 import c from "../../TodoPage.module.less";
 import ExtraTask from "./ExtraTask/ExtraTask";
-function ExtraBlock({TodoId,ActiveTodo,pathName,SetExtraAsDoneCreator,AddExtraTask}){
+import {ITodo} from "../../../../../Interfaces";
+import {ActionCreator} from "redux";
+import {AddExtraTaskType, SetExtraAsDoneCreatorType} from "../../../../../Types";
+
+type Props={
+    TodoId:number|null,
+    ActiveTodo:ITodo[],
+    pathName:string,
+    SetExtraAsDoneCreator:ActionCreator<SetExtraAsDoneCreatorType>,
+    AddExtraTask:ActionCreator<AddExtraTaskType>
+}
+const ExtraBlock:React.FC<Props>=({TodoId,ActiveTodo,pathName,SetExtraAsDoneCreator,AddExtraTask})=>{
 
     const [extraTask, setExtraTask] = useState('')
     const[Tasklength,setTaskLength]=useState( ActiveTodo[0].extraTasks.length+1)
@@ -10,7 +21,7 @@ function ExtraBlock({TodoId,ActiveTodo,pathName,SetExtraAsDoneCreator,AddExtraTa
         setTaskLength(ActiveTodo[0].comments.length+1)
     },[ActiveTodo[0].id])
 
-    const addExtraTaskHandler = (extraTask) => {
+    const addExtraTaskHandler = (extraTask:string) => {
         AddExtraTask(pathName, TodoId, extraTask, Tasklength)
         setTaskLength(Tasklength+1)
     }

@@ -1,7 +1,18 @@
 import React, {useEffect, useState} from "react";
 import c from "../../TodoPage.module.less";
-import Comments from "./Comments/Comments";
-function CommentsBlock({addCommentCreator,TodoId,pathName,ActiveTodo}){
+import Comments from "./Comments/Comments.tsx";
+import {ActionCreator} from "redux";
+import {addCommentCreatorType} from "../../../../../Types";
+import {ITodo} from "../../../../../Interfaces";
+
+type Props={
+    addCommentCreator:ActionCreator<addCommentCreatorType>,
+    TodoId:number|null,
+    pathName:string,
+    ActiveTodo:ITodo[]
+}
+
+const CommentsBlock:React.FC<Props>=({addCommentCreator,TodoId,pathName,ActiveTodo})=>{
 
     const [comment, setComment] = useState('')
     const [CommentLength,setCommentLength]=useState(ActiveTodo[0].comments.length+1)
@@ -10,12 +21,11 @@ function CommentsBlock({addCommentCreator,TodoId,pathName,ActiveTodo}){
         setCommentLength(ActiveTodo[0].extraTasks.length+1)
     },[ActiveTodo[0].id])
 
-    return(
-        <div className={c.info__comments}>
+    return(<div className={c.info__comments}>
             <h3>Comments </h3>
             <div className={c.comments__wrapper}>
                 <input type={'text'} value={comment} onChange={e => setComment(e.target.value)}
-                       style={{display: !TodoId && 'none'}}/>
+                       style={{display: !TodoId ? 'none' : 'block'}}/>
                 <button className={c.comments__WriteCommentButton} disabled={!TodoId || !comment} onClick={() => {
                     addCommentCreator(pathName, TodoId,CommentLength, comment);
                     setCommentLength(CommentLength+1)
@@ -27,7 +37,7 @@ function CommentsBlock({addCommentCreator,TodoId,pathName,ActiveTodo}){
                                                                                                                      text={comment.text}
                                                                                                                      addCommentCreator={addCommentCreator}
                                                                                                                      pathName={pathName} TodoId={TodoId}
-                                                                                                                     ActiveTodo={ActiveTodo[0].comments}
+                                                                                                                     TodoComments={ActiveTodo[0].comments}
                                                                                                                      CommentLength={CommentLength}
                                                                                                                      setCommentLength={setCommentLength}/>)}
         </div>

@@ -1,7 +1,24 @@
 import React from "react";
 import c from '../TodoPage.module.less'
+import {ITodo} from "../../../../Interfaces";
+import {ActionCreator} from "redux";
+import {DeleteTodoType} from "../../../../Types";
+type Props={
+    todo:ITodo,
+    TodoId:number | null,
+    board:any,
+    dragStartHandler:(e:React.DragEvent,board:any,todo:ITodo)=>void,
+    dragLeaveHandler:(e:React.DragEvent)=>void,
+    dragEndHandler:(e:React.DragEvent,todo:ITodo)=>void,
+    dragOverHandler:(e:React.DragEvent)=>void,
+    dropHandler:(e:React.DragEvent,board:any,todo:ITodo)=>void,
+    svg:SVGElement,
+    DeleteTodo:ActionCreator<DeleteTodoType>,
+    pathName:string,
+    setTodoId:(id:number | null)=>void
+}
 
-function Todo({
+const Todo:React.FC<Props>=({
                   todo,
                   TodoId,
                   board,
@@ -13,7 +30,7 @@ function Todo({
                   svg,
                   DeleteTodo,
                   pathName,setTodoId
-              }) {
+              }) =>{
     return (<>
 
         <div className={`${c.item} ${todo.id === TodoId ? c.activeItem : undefined}`} draggable="true"

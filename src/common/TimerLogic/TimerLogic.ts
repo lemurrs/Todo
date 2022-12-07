@@ -1,9 +1,9 @@
 
-const Time = (count) => {
+const Time = (count:number) => {
     //Initial value, in case we don`t set minutes or hours to show them correctly
-    let seconds = '00'
-    let minutes='00'
-    let hours='00'
+    let seconds:number | string = '00'
+    let minutes:number | string='00'
+    let hours:number | string='00'
     //Math part
     if (count < 60){
         seconds=count

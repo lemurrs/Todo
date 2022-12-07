@@ -3,8 +3,21 @@ import c from "../TodoPage.module.less";
 import ExtraBlock from "./ExtraBlock/ExtraBlock";
 import CommentsBlock from "./CommentsBlock/CommentsBlock";
 import InfoBlock from "./InfoBlock/InfoBlock";
+import {ActionCreator} from "redux";
+import {addCommentCreatorType, AddExtraTaskType, ChangeTodoType, SetExtraAsDoneCreatorType} from "../../../../Types";
+import {Project} from "../../../../Interfaces";
 
-function AboutTodo({TodoId, pathName, SetExtraAsDoneCreator, AddExtraTask, ChangeTodo, addCommentCreator,currentProject}) {
+type Props={
+    TodoId:number,
+    pathName:string,
+    SetExtraAsDoneCreator:ActionCreator<SetExtraAsDoneCreatorType>,
+    AddExtraTask:ActionCreator<AddExtraTaskType>,
+    ChangeTodo:ActionCreator<ChangeTodoType>,
+    addCommentCreator:ActionCreator<addCommentCreatorType>,
+    currentProject:Project
+}
+
+const AboutTodo:React.FC<Props>=({TodoId, pathName, SetExtraAsDoneCreator, AddExtraTask, ChangeTodo, addCommentCreator,currentProject}) =>{
 
     let ActiveTodo = currentProject.Todo.filter(el => el.id === TodoId)
 

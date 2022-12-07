@@ -2,25 +2,23 @@ import React, {useEffect, useState} from 'react'
 import c from "../../../TodoPage.module.less";
 import moment from "moment";
 import svg from '../../../../../../common/svg/symbol-defs.svg'
+import {ITodo} from "../../../../../../Interfaces";
+import {ActionCreator} from "redux";
+import {ChangeTodoType} from "../../../../../../Types";
 import Time from "../../../../../../common/TimerLogic/TimerLogic";
-function TodoInfo({
-                      ActiveTodo = {
-                          id: 0,
-                          title: 'Todo',
-                          description: 'cook egg',
-                          priority: 'Important',
-                          created: 'today',
-                          deadLine: 'Tomorrow',
-                          status: 'Queued',
-                          extraTasks: [],
-                          files:[],
-                      }
-                      , ChangeTodo, pathName,TodoId
-                  }) {
+
+type Props={
+    ActiveTodo:ITodo,
+    pathName:string,
+    ChangeTodo:ActionCreator<ChangeTodoType>,
+    TodoId:number
+}
+
+const TodoInfo:React.FC<Props>=({ActiveTodo, ChangeTodo, pathName,TodoId}) =>{
     const [change, setChange] = useState(false)
-    const [duration,setDuration]=useState('')
+    const [duration,setDuration]=useState<{hours:number|string,minutes:number|string,seconds:number|string}>()
      useEffect(()=>{
-         let interval;
+         let interval:any;
          if(!change){
              interval = setInterval(()=>{
                  setDuration(Time(Math.floor(moment.duration(moment().diff(moment(ActiveTodo.created,'MMMM Do YYYY, h:mm:ss a'))).asSeconds())))
@@ -30,7 +28,7 @@ function TodoInfo({
     },[ActiveTodo,change])
 
 
-    const TodoInfoForm = ({ChangeTodo}) => {
+    const TodoInfoForm = ({ChangeTodo}:{ChangeTodo:ActionCreator<ChangeTodoType>}) => {
         const [title, setTitle] = useState(ActiveTodo.title)
         const [description, setDescription] = useState(ActiveTodo.description)
         const [priority, setPriority] = useState(ActiveTodo.priority)
@@ -40,7 +38,7 @@ function TodoInfo({
         return <form className={c.InfoForm} onSubmit={(e) => {
             e.preventDefault();
             const deadLine = moment().add(DateDays, 'days').add(DateHours, 'hours').add(DateMinutes, 'minutes').format("MMMM Do YYYY, h:mm:ss a")
-            ChangeTodo(pathName, ActiveTodo.id, e.target[0].value, e.target[1].value, priority, deadLine)
+            ChangeTodo(pathName, ActiveTodo.id, ((e.target as HTMLFormElement)[0] as HTMLInputElement).value, ((e.target as HTMLFormElement)[1] as HTMLInputElement).value, priority, deadLine)
             setChange(false)
         }}
         >
@@ -75,18 +73,18 @@ function TodoInfo({
                 <p><b>Title: </b>{ActiveTodo.title}</p>
                 <p><b>Description: </b>{ActiveTodo.description}</p>
                 <p><b>Priority: </b> {ActiveTodo.priority}</p>
-                <p><b>Created: </b>{ActiveTodo.created}</p>
-                <p><b>Dead line: </b>{ActiveTodo.deadLine}</p>
+                <p><b>Created: </b>{ActiveTodo.created.toString()}</p>
+                <p><b>Dead line: </b>{ActiveTodo.deadLine.toString()}</p>
                 <p><b>Status: </b> {ActiveTodo.status} </p>
-                <p><b>In progress: </b>{duration.hours}:{duration.minutes}:{duration.seconds}</p>
+                <p><b>In progress: </b>{duration?.hours}:{duration?.minutes}:{duration?.seconds}</p>
                 <b>Uploaded files: </b>
                     <div className={c.fileUploader__fileName}>
                         {TodoId && ActiveTodo.files.map(file => {
-                            let objectURL;
+                            let objectURL:string | undefined;
                             try{
                                 objectURL = URL.createObjectURL(file);
                             }catch (e) {
-                                objectURL=null;
+                                objectURL=undefined;
                             }
 
 

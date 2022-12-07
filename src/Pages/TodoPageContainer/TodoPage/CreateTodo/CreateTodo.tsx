@@ -3,7 +3,11 @@ import c from "../TodoPage.module.less";
 import svg from "../../../../common/svg/symbol-defs.svg";
 import {useNavigate} from "react-router-dom";
 
-function CreateTodo({setActiveModal}) {
+type Props={
+    setActiveModal:(a:boolean)=>void
+}
+
+const CreateTodo:React.FC<Props>=({setActiveModal})=>{
 
     const navigate = useNavigate()
 

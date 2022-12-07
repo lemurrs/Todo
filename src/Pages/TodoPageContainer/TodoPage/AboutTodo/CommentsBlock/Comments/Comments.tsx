@@ -1,14 +1,30 @@
 import React, {useState} from "react";
 import c from './Comments.module.less'
-const Comments=({text,addCommentCreator,pathName,TodoId,ActiveTodo,CommentLength,setCommentLength,id})=>{
+import {ActionCreator} from "redux";
+import {addCommentCreatorType} from "../../../../../../Types";
+import {IComments} from "../../../../../../Interfaces";
+
+type Props={
+    text:string,
+    addCommentCreator:ActionCreator<addCommentCreatorType>,
+    pathName:string,
+    TodoId:number|null,
+    TodoComments:IComments[],
+    CommentLength:number,
+    setCommentLength:(a:number)=>void,
+    id:number
+}
+
+const Comments:React.FC<Props>=({text,addCommentCreator,pathName,TodoId,TodoComments,CommentLength,setCommentLength,id})=>{
     const [replyText,setReplyText]=useState('')
     const [replyActive,setReplyActive]=useState(false)
-    function handleCom(id) {
+    function handleCom(id:number) {
         addCommentCreator(pathName, TodoId, CommentLength, replyText,id)
         setCommentLength(CommentLength + 1)
         setReplyText('')
     }
-    let Reply=ActiveTodo.filter((comment)=>comment.parentId)
+
+    let Reply=TodoComments.filter((comment)=>comment.parentId)
     return(
         <>
             <div className={c.test}>
@@ -23,7 +39,7 @@ const Comments=({text,addCommentCreator,pathName,TodoId,ActiveTodo,CommentLength
 
             <div style={{marginLeft:'1rem'}}>
                 {Reply.reverse().map((rep)=>rep.parentId===id &&<>
-                    <Comments id={rep.id} text={rep.text} addCommentCreator={addCommentCreator} pathName={pathName} setCommentLength={setCommentLength} CommentLength={CommentLength} TodoId={TodoId} ActiveTodo={ActiveTodo} key={rep.id}/>
+                    <Comments id={rep.id} text={rep.text} addCommentCreator={addCommentCreator} pathName={pathName} setCommentLength={setCommentLength} CommentLength={CommentLength} TodoId={TodoId} TodoComments={TodoComments} key={rep.id}/>
                 </>)}
             </div>
             </div>

@@ -1,6 +1,6 @@
 import React, {Suspense, lazy} from 'react';
 import {Route, Routes} from "react-router-dom";
-import Header from "./Components/Header/Header";
+import Header from "./Components/Header/Header.tsx";
 
 const TodoPageContainer = lazy(() => import('./Pages/TodoPageContainer/TodoPageContainer'))
 const ProjectPageContainer = lazy(() => import('./Pages/ProjectPageContainer/ProjectPageContainer'))

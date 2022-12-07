@@ -6,8 +6,11 @@ import ModalForm from "./ModalForm/ModalForm";
 import AboutTodo from "./AboutTodo/AboutTodo";
 import CreateTodo from "./CreateTodo/CreateTodo";
 import DragDropWithFilter from "./DragDropWithFilter/DragDropWithFilter";
+import {TodoPageProps} from "../../../Types";
 
-function TodoPage({
+
+
+const TodoPage:React.FC<TodoPageProps>=({
                       ProjectData,
                       SetTodoCreator,
                       ChangeStatus,
@@ -16,7 +19,7 @@ function TodoPage({
                       addCommentCreator,
                       SetExtraAsDoneCreator,
                       DeleteTodo
-                  }) {
+                  }) =>{
 
     const loc = useLocation()
 
@@ -25,7 +28,7 @@ function TodoPage({
     const currentProject = ProjectData.filter(el => el.name === pathName)[0]
 
     const [activeModal, setActiveModal] = useState(false)
-    const [TodoId, setTodoId] = useState(null)
+    const [TodoId, setTodoId] = useState<number|null>(null)
 
 
 
