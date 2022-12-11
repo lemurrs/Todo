@@ -111,6 +111,22 @@ input:active {
 
 }
 
+.comments__WriteCommentButton{
+  transition: all .15s;
+  color: white;
+  border: 1px solid white;
+  background: rgba(0,0,0,0.7);
+  border-radius: 1rem;
+  grid-row: 2/3;
+  grid-column: 2/3;
+  justify-self: end;
+  margin-bottom: 0.5rem;
+  font-size: 1.2rem;
+  padding: 0.5rem;
+  &:hover{
+    transform: scale(1.1);
+  }
+}
 
 .info__info {
   position: relative;
@@ -290,19 +306,9 @@ input:active {
   margin: 0;
   margin-bottom: 0.5rem;
 }
-.comments__wrapper>button{
-  border-radius: 1rem;
-  grid-row: 2/3;
-  grid-column: 2/3;
-  border: none;
-  justify-self: end;
-  margin-bottom: 0.5rem;
-  font-size: 1.2rem;
-  font-weight: 50;
-  padding: 0.5rem;
-}
+
 .comments__wrapper>button:disabled{
-  color: #e0e0e0;
+  background: #1c1b1b;
 }
 .extra__createTask input {
   margin-right: 0.5rem;

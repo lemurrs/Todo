@@ -32,7 +32,7 @@ const projectPageReducer = (state = initialState, action: ActionTypes): InitialS
                 ...state, ProjectData: state.ProjectData.map(el => {
                         if (el.name !== action.name) return el
                         let id: number = el.Todo[0] ? el.Todo[el.Todo.length - 1].id + 1 : 1
-                        debugger;
+
                         return {
                             ...el,
                             Todo: [...el.Todo,

@@ -19,9 +19,9 @@ const Comments:React.FC<Props>=({text,addCommentCreator,pathName,TodoId,TodoComm
     const [replyText,setReplyText]=useState('')
     const [replyActive,setReplyActive]=useState(false)
     function handleCom(id:number) {
-        addCommentCreator(pathName, TodoId, CommentLength, replyText,id)
-        setCommentLength(CommentLength + 1)
-        setReplyText('')
+            addCommentCreator(pathName, TodoId, CommentLength, replyText,id)
+            setCommentLength(CommentLength + 1)
+            setReplyText('')
     }
 
     let Reply= TodoComments.filter((comment)=>comment.parentId)
@@ -38,9 +38,8 @@ const Comments:React.FC<Props>=({text,addCommentCreator,pathName,TodoId,TodoComm
             </div>
 
             <div style={{marginLeft:'1rem'}}>
-                {Reply.reverse().map((rep)=>rep.parentId===id &&<>
-                    <Comments id={rep.id} text={rep.text} addCommentCreator={addCommentCreator} pathName={pathName} setCommentLength={setCommentLength} CommentLength={CommentLength} TodoId={TodoId} TodoComments={TodoComments} key={rep.id}/>
-                </>)}
+                {Reply.reverse().map((rep)=>rep.parentId===id && <Comments id={rep.id} text={rep.text} addCommentCreator={addCommentCreator} pathName={pathName} setCommentLength={setCommentLength} CommentLength={CommentLength} TodoId={TodoId} TodoComments={TodoComments} key={rep.id}/>
+                )}
             </div>
             </div>
 

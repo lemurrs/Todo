@@ -17,20 +17,27 @@ display: flex;
     display: grid;
     grid-template-columns: auto auto;
     grid-template-rows: auto auto auto;
+    & button{
+      color: white;
+      border-radius: 1rem;
+      grid-column: 2/3;
+      justify-self: end;
+      padding: 0.4rem;
+      margin-right: 1rem;
+      border: 1px solid white;
+      background: rgba(0,0,0,0.7);
+      font-size: 1.2rem;
+
+      transition: all .15s;
+      &:hover{
+        transform: scale(1.1);
+      }
+      &:disabled{
+        background: #1c1b1b;
+      }
+    }
   }
-  &__ReplyBlock button{
-    color: black;
-    border-radius: 1rem;
-    border: none;
-    grid-column: 2/3;
-    justify-self: end;
-    padding: 0.4rem;
-    margin-right: 1rem;
-    background: deepskyblue;
-    font-size: 1.2rem;
-    font-weight: 700;
-    transition: all .3s;
-  }
+
   &__ReplyBlock input{
     grid-column: 1/-1;
     margin-bottom:  1rem;

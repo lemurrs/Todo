@@ -32,9 +32,9 @@ const DragDropWithFilter:React.FC<Props> = ({currentProject, TodoId, pathName, D
     return (
         <>
             <div className={c.TodoPage__filterTodo}>
-                <input value={filterId} onChange={(e) => setFilterId(Number(e.target.value))} placeholder={'id'}
+                <input value={filterId} onChange={(e) => setFilterId(Number(e.target.value))} placeholder={'Number'}
                        type={'number'}/>
-                <input value={filterTitle} onChange={(e) => setFilterTitle(e.target.value)} placeholder={'title'}/>
+                <input value={filterTitle} onChange={(e) => setFilterTitle(e.target.value)} placeholder={'Title'}/>
             </div>
 
             <DragDrop TodoId={TodoId} pathName={pathName} DeleteTodo={DeleteTodo} svg={svg} setTodoId={setTodoId}
