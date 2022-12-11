@@ -1,35 +1,38 @@
 import {Project, ITodo} from "../Interfaces";
 import {
+    ActionTypes,
     addCommentCreatorType, AddExtraTaskType, ChangeStatusType,
     ChangeTodoType,
     DeleteTodoType,
     ProjectCreatorType,
     SetExtraAsDoneCreatorType, SetTodoCreatorType
 } from "../Types";
+
 export const CREATE_PROJECT = 'CREATE-PROJECT'
 export const SET_TODO = 'SET-TODO'
 export const CHANGE_STATUS = 'CHANGE-STATUS'
-export const CHANGE_TODO='CHANGE-TODO'
-export const ADD_EXTRA='ADD-EXTRA'
-export const ADD_COMMENT='ADD-COMMENT'
-export const SET_EXTRA_AS_DONE='SET-EXTRA-AS-DONE'
-export const DELETE_TODO='DELETE-TODO'
-
+export const CHANGE_TODO = 'CHANGE-TODO'
+export const ADD_EXTRA = 'ADD-EXTRA'
+export const ADD_COMMENT = 'ADD-COMMENT'
+export const SET_EXTRA_AS_DONE = 'SET-EXTRA-AS-DONE'
+export const DELETE_TODO = 'DELETE-TODO'
 
 
 let initialState = {
     ProjectData: [] as Array<Project>
 }
-export type InitialStateType=typeof initialState
-const projectPageReducer = (state = initialState, action:any):InitialStateType => {
+export type InitialStateType = typeof initialState
+
+
+const projectPageReducer = (state = initialState, action: ActionTypes): InitialStateType => {
     switch (action.type) {
 
         case SET_TODO:
             return {
                 ...state, ProjectData: state.ProjectData.map(el => {
                         if (el.name !== action.name) return el
-                    let id : number = el.Todo[0] ? el.Todo[el.Todo.length-1].id+1 : 1
-                    debugger;
+                        let id: number = el.Todo[0] ? el.Todo[el.Todo.length - 1].id + 1 : 1
+                        debugger;
                         return {
                             ...el,
                             Todo: [...el.Todo,
@@ -42,8 +45,8 @@ const projectPageReducer = (state = initialState, action:any):InitialStateType =
                                     deadLine: action.deadLine,
                                     status: action.status,
                                     extraTasks: action.extraTasks,
-                                    comments:action.comments,
-                                    files:action.files
+                                    comments: action.comments,
+                                    files: action.files
                                 }
 
                             ] as ITodo[]
@@ -67,13 +70,13 @@ const projectPageReducer = (state = initialState, action:any):InitialStateType =
                             }
                             return {
                                 ...el,
-                                extraTasks:el.extraTasks.map(task=>{
-                                    if(task.id!==action.taskId){
+                                extraTasks: el.extraTasks.map(task => {
+                                    if (task.id !== action.taskId) {
                                         return task
                                     }
                                     return {
                                         ...task,
-                                        status:'Done'
+                                        status: 'Done'
                                     }
                                 })
                             }
@@ -85,13 +88,14 @@ const projectPageReducer = (state = initialState, action:any):InitialStateType =
         case DELETE_TODO:
             return {
                 ...state, ProjectData: state.ProjectData.map(project => {
-                    return{
-                        ...project,
-                        Todo:project.Todo.filter((todo)=>todo.id!==action.id)
+                        return {
+                            ...project,
+                            Todo: project.Todo.filter((todo) => todo.id !== action.id)
 
+                        }
                     }
-                    }
-                )}
+                )
+            }
 
 
         case ADD_EXTRA:
@@ -108,11 +112,11 @@ const projectPageReducer = (state = initialState, action:any):InitialStateType =
                             }
                             return {
                                 ...el,
-                                extraTasks:[...el.extraTasks,
+                                extraTasks: [...el.extraTasks,
                                     {
-                                        text:action.extra,
-                                        id:action.extraId,
-                                        status:'todo'
+                                        text: action.extra,
+                                        id: action.extraId,
+                                        status: 'todo'
                                     }]
                             }
                         })
@@ -120,9 +124,9 @@ const projectPageReducer = (state = initialState, action:any):InitialStateType =
                 })
 
             }
-        case ADD_COMMENT:{
+        case ADD_COMMENT: {
             return {
-                ...state,ProjectData: state.ProjectData.map(el => {
+                ...state, ProjectData: state.ProjectData.map(el => {
                     if (el.name !== action.name) {
                         return el
                     }
@@ -134,24 +138,25 @@ const projectPageReducer = (state = initialState, action:any):InitialStateType =
                             }
                             return {
                                 ...el,
-                                comments:[...el.comments,{
-                                    id:action.commentId,
-                                    text:action.text,
-                                    parentId:action.parentId
+                                comments: [...el.comments, {
+                                    id: action.commentId,
+                                    text: action.text,
+                                    parentId: action.parentId
                                 }]
 
                             }
                         })
                     }
-            })
+                })
 
-        }}
+            }
+        }
 
         case CREATE_PROJECT:
             return {
                 ...state,
                 ProjectData: [...state.ProjectData, {
-                    id:action.id,
+                    id: action.id,
                     name: action.name,
                     Todo: [],
                 }]
@@ -208,23 +213,23 @@ const projectPageReducer = (state = initialState, action:any):InitialStateType =
 }
 
 
-export let addCommentCreator=(name:string,id:number,commentId:number,text:string,parentId:number):addCommentCreatorType=>({
+export let addCommentCreator = (name: string, id: number, commentId: number, text: string, parentId: number): addCommentCreatorType => ({
     type: ADD_COMMENT,
-    name:name,
-    id:id,
-    commentId:commentId,
-    text:text,
-    parentId:parentId
+    name: name,
+    id: id,
+    commentId: commentId,
+    text: text,
+    parentId: parentId
 
 })
-export let SetExtraAsDoneCreator=(name:string,id:number,taskId:number):SetExtraAsDoneCreatorType=>({
-    type:SET_EXTRA_AS_DONE,
-    name:name,
-    id:id,
-    taskId:taskId
+export let SetExtraAsDoneCreator = (name: string, id: number, taskId: number): SetExtraAsDoneCreatorType => ({
+    type: SET_EXTRA_AS_DONE,
+    name: name,
+    id: id,
+    taskId: taskId
 })
 
-export let SetTodoCreator = (name:string, title:string, description:string, priority:string, created:Date, deadLine:Date,files:File):SetTodoCreatorType => ({
+export let SetTodoCreator = (name: string, title: string, description: string, priority: string, created: Date, deadLine: Date, files: File): SetTodoCreatorType => ({
     type: SET_TODO,
     name: name,
     title: title,
@@ -233,43 +238,43 @@ export let SetTodoCreator = (name:string, title:string, description:string, prio
     created: created,
     deadLine: deadLine,
     status: 'Queue',
-    extraTasks:[],
-    comments:[],
-    files:files
+    extraTasks: [],
+    comments: [],
+    files: files
 })
-export let AddExtraTask=(name:string,id:number,extra:string,extraId:number):AddExtraTaskType=>({
+export let AddExtraTask = (name: string, id: number, extra: string, extraId: number): AddExtraTaskType => ({
     type: ADD_EXTRA,
-    extra:extra,
-    name:name,
-    id:id,
-    extraId:extraId,
+    extra: extra,
+    name: name,
+    id: id,
+    extraId: extraId,
 })
-export let ProjectCreator = (name:string,id:number):ProjectCreatorType => ({
+export let ProjectCreator = (name: string, id: number): ProjectCreatorType => ({
     type: CREATE_PROJECT,
     name: name,
-    id:id,
+    id: id,
 })
-export let ChangeStatus = (name:string, id:number, status:string):ChangeStatusType => ({
+export let ChangeStatus = (name: string, id: number, status: string): ChangeStatusType => ({
     type: CHANGE_STATUS,
     name: name,
     id: id,
     status: status
 
 })
-export let DeleteTodo=(name:string,id:number):DeleteTodoType=>({
-    type:DELETE_TODO,
-    name:name,
-    id:id,
+export let DeleteTodo = (name: string, id: number): DeleteTodoType => ({
+    type: DELETE_TODO,
+    name: name,
+    id: id,
 })
 
-export let ChangeTodo=(name:string,id:number,title:string,description:string,priority:string,deadLine:Date):ChangeTodoType=>({
-    type:CHANGE_TODO,
-    name:name,
-    id:id,
-    title:title,
-    description:description,
-    priority:priority,
-    deadLine:deadLine,
+export let ChangeTodo = (name: string, id: number, title: string, description: string, priority: string, deadLine: Date): ChangeTodoType => ({
+    type: CHANGE_TODO,
+    name: name,
+    id: id,
+    title: title,
+    description: description,
+    priority: priority,
+    deadLine: deadLine,
 })
 
 export default projectPageReducer

@@ -9,16 +9,57 @@ import {
     SetTodoCreator
 } from "../../redux/ProjectPage-reducer";
 import {AppStateType} from "../../redux/redux-store";
-import {TodoPageProps} from "../../Types";
+import {
+    addCommentCreatorType,
+    AddExtraTaskType,
+    ChangeStatusType,
+    ChangeTodoType, DeleteTodoType, SetExtraAsDoneCreatorType,
+    SetTodoCreatorType,
+    TodoPageProps
+} from "../../Types";
+import {Project} from "../../Interfaces";
+import {ActionCreator} from "redux";
 
 
-
-const TodoPageContainer:React.FC<TodoPageProps> = ({SetTodoCreator, ProjectData, ChangeStatus,ChangeTodo,AddExtraTask,addCommentCreator,SetExtraAsDoneCreator,DeleteTodo}) => {
-    return (<TodoPage SetTodoCreator={SetTodoCreator} ProjectData={ProjectData} ChangeStatus={ChangeStatus} ChangeTodo={ChangeTodo} AddExtraTask={AddExtraTask} addCommentCreator={addCommentCreator} SetExtraAsDoneCreator={SetExtraAsDoneCreator} DeleteTodo={DeleteTodo}/>)
+type MapStateToPropsType = {
+    ProjectData: Project[]
 }
-let mapStateToProps = (state:AppStateType) => ({
+type MapDispatchToPropsType = {
+    SetTodoCreator: ActionCreator<SetTodoCreatorType>,
+    ChangeStatus: ActionCreator<ChangeStatusType>,
+    ChangeTodo: ActionCreator<ChangeTodoType>,
+    AddExtraTask: ActionCreator<AddExtraTaskType>,
+    addCommentCreator: ActionCreator<addCommentCreatorType>,
+    SetExtraAsDoneCreator: ActionCreator<SetExtraAsDoneCreatorType>,
+    DeleteTodo: ActionCreator<DeleteTodoType>
+}
+type OwnPropsType = {}
+
+const TodoPageContainer: React.FC<TodoPageProps> = ({
+                                                        SetTodoCreator,
+                                                        ProjectData,
+                                                        ChangeStatus,
+                                                        ChangeTodo,
+                                                        AddExtraTask,
+                                                        addCommentCreator,
+                                                        SetExtraAsDoneCreator,
+                                                        DeleteTodo
+                                                    }) => {
+    return (<TodoPage SetTodoCreator={SetTodoCreator} ProjectData={ProjectData} ChangeStatus={ChangeStatus}
+                      ChangeTodo={ChangeTodo} AddExtraTask={AddExtraTask} addCommentCreator={addCommentCreator}
+                      SetExtraAsDoneCreator={SetExtraAsDoneCreator} DeleteTodo={DeleteTodo}/>)
+}
+let mapStateToProps = (state: AppStateType) => ({
     ProjectData: state.ProjectPage.ProjectData
 })
 
-export default React.memo(connect(mapStateToProps, {SetTodoCreator, ChangeStatus,ChangeTodo,AddExtraTask,addCommentCreator,SetExtraAsDoneCreator,DeleteTodo})(TodoPageContainer))
+export default React.memo(connect<MapStateToPropsType, MapDispatchToPropsType, OwnPropsType, AppStateType>(mapStateToProps, {
+    SetTodoCreator,
+    ChangeStatus,
+    ChangeTodo,
+    AddExtraTask,
+    addCommentCreator,
+    SetExtraAsDoneCreator,
+    DeleteTodo
+})(TodoPageContainer))
 

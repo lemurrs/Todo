@@ -16,7 +16,7 @@ type Props={
 const ExtraTask:React.FC<Props>=({text,status,id,SetExtraAsDoneCreator,pathName,TodoId})=>{
 
     return<div className={c.extraBlock}>
-   <p className={c.ExtraTask} style={{background:status==='Done'? 'green' : 'initial'}}>{text}</p>
+   <p className={c.ExtraTask} style={{background:status==='Done'? 'green' : '#494848'}}>{text}</p>
 
         <svg className={c.extraDoneSvg} onClick={()=>{SetExtraAsDoneCreator(pathName,TodoId,id)}}>
             <use xlinkHref={svg+'#icon-done'}>

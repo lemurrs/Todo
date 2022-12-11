@@ -2,7 +2,8 @@ import React from "react";
 import c from '../TodoPage.module.less'
 import {ITodo} from "../../../../Interfaces";
 import {ActionCreator} from "redux";
-import {DeleteTodoType} from "../../../../Types";
+import { DeleteTodoType} from "../../../../Types";
+
 type Props={
     todo:ITodo,
     TodoId:number | null,

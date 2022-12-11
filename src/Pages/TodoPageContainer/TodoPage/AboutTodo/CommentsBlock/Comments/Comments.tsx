@@ -24,7 +24,7 @@ const Comments:React.FC<Props>=({text,addCommentCreator,pathName,TodoId,TodoComm
         setReplyText('')
     }
 
-    let Reply=TodoComments.filter((comment)=>comment.parentId)
+    let Reply= TodoComments.filter((comment)=>comment.parentId)
     return(
         <>
             <div className={c.test}>

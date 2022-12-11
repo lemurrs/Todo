@@ -1,4 +1,4 @@
-import {IComments, ExtraTask, Project} from "./Interfaces";
+import {IComments, ExtraTask, Project, ITodo} from "./Interfaces";
 import {
     ADD_COMMENT,
     ADD_EXTRA, CHANGE_STATUS, CHANGE_TODO,
@@ -72,6 +72,7 @@ export type ChangeStatusType={
     id: number,
     status: string
 }
+
 export type DeleteTodoType={
     type:typeof DELETE_TODO,
     name:string,
@@ -86,3 +87,4 @@ export type ChangeTodoType={
     priority:string,
     deadLine:Date,
 }
+export type ActionTypes =ChangeTodoType | DeleteTodoType | ChangeStatusType | ProjectCreatorType | AddExtraTaskType | SetTodoCreatorType | SetExtraAsDoneCreatorType | addCommentCreatorType

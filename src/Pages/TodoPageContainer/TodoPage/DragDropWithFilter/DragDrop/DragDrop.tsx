@@ -1,13 +1,12 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import c from "../../TodoPage.module.less";
 import Todo from "../../Todo/Todo";
 import {ActionCreator} from "redux";
-import {ChangeStatusType, DeleteTodoType} from "../../../../../Types";
+import { ChangeStatusType, DeleteTodoType} from "../../../../../Types";
 import {ITodo, Project} from "../../../../../Interfaces";
 
 type Props={
     setTodoId:(a:number | null)=>void,
-
     pathName:string,
     DeleteTodo:ActionCreator<DeleteTodoType>,
     svg:SVGElement,
@@ -22,6 +21,9 @@ const DragDrop:React.FC<Props>=({setTodoId,pathName,DeleteTodo,svg,TodoId,Change
     let QueuedTodo;
     let DevelopmentTodo;
     let DoneTodo;
+
+
+
     if (currentProject.Todo && !filteredResult) {
         QueuedTodo = currentProject.Todo.filter(el => el.status === 'Queue')
         DevelopmentTodo = currentProject.Todo.filter(el => el.status === 'Development')
@@ -32,24 +34,28 @@ const DragDrop:React.FC<Props>=({setTodoId,pathName,DeleteTodo,svg,TodoId,Change
         DoneTodo = filteredResult.filter(el => el.status === 'Done')
     }
 
-    let [boards, setBoards] = useState<any[]>([
+
+    const [boards, setBoards] = useState([
         {id: 1, text: 'Queue', todos: QueuedTodo},
         {id: 2, text: 'Development', todos: DevelopmentTodo},
         {id: 3, text: 'Done', todos: DoneTodo},
     ])
-    boards[0].todos = QueuedTodo
-    boards[1].todos = DevelopmentTodo
-    boards[2].todos = DoneTodo
 
-    const [currentBoard, setCurrentBoard] = useState<null|any>(null)
-    const [currentItem, setCurrentItem] = useState<null | ITodo>(null)
+    boards[0].todos=QueuedTodo
+    boards[1].todos=DevelopmentTodo
+    boards[2].todos=DoneTodo
+
+
+
+
+    const [currentBoard, setCurrentBoard] = useState<any>(null)
+    const [currentItem, setCurrentItem] = useState<any>(null)
 
     function dragStartHandler(e:React.DragEvent, board:any, todo:ITodo) {
         setCurrentBoard(board)
         setCurrentItem(todo)
         setTodoId(todo.id)
     }
-    console.log(boards)
 
     function dragLeaveHandler(e:React.DragEvent) {
         (e.target as HTMLDivElement).style.boxShadow = 'none'
@@ -69,7 +75,7 @@ const DragDrop:React.FC<Props>=({setTodoId,pathName,DeleteTodo,svg,TodoId,Change
 
     function dropHandler(e:React.DragEvent, board:any, todo:ITodo) {
         e.stopPropagation()
-        const currentIndex = currentBoard.todos.indexOf(currentItem)
+        const currentIndex = currentBoard?.todos?.indexOf(currentItem)
         currentBoard.todos.splice(currentIndex, 1)
         const dropIndex = board.todos.indexOf(todo)
         board.todos.splice(dropIndex + 1, 0, currentItem)
