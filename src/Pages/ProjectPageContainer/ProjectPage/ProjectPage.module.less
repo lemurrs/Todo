@@ -7,6 +7,37 @@
   border-radius: 10px;
   width: 100%;
   transition: all .5s ease;
+  &  p {
+    margin: 0;
+    margin-bottom: 1rem;
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+  & h1 {
+    word-break: break-all;
+    color: black;
+    padding: 3rem;
+    margin: 0;
+  }
+  &:hover {
+    transform: scale(1.05);
+    &:before{
+      .animated(choosenProject);
+      animation-duration: 1.5s;
+    }
+  }
+  &:before{
+    content: '';
+    width: 5px;
+    height: 100%;
+    background: beige;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    border-radius: 100%;
+  }
 }
 input{
   .todos() ;
@@ -18,32 +49,19 @@ select{
 .ProjectPage{
   max-width: 1200px;
   margin: 0 auto;
+  &__Button{
+    transform: translateY(-50%);
+    .flex();
+    & > button{
+      .button();
+      transition-duration: 0.15s;
+      &:hover{
+        transform: scale(1.1);
+      }
+    }
+  }
 }
 
-.Project h1 {
-  word-break: break-all;
-  color: black;
-  padding: 3rem;
-  margin: 0;
-}
-.Project:hover {
-  transform: scale(1.05);
-}
-.Project:before{
-  content: '';
-  width: 5px;
-  height: 100%;
-  background: beige;
-  position: absolute;
-  top: 0;
-  left: 0;
-  opacity: 0;
-  border-radius: 100%;
-}
-.Project:hover:before{
-.animated(choosenProject);
-  animation-duration: 1.5s;
-}
 @keyframes glow {
   0%{
     box-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #6e495d, 0 0 40px #ffdb4d, 0 0 50px #ffdb4d, 0 0 60px #ffdb4d, 0 0 70px #ffdb4d;
@@ -68,17 +86,6 @@ select{
   }
 
 }
-.ProjectPage__Button{
-  transform: translateY(-50%);
-.flex()
-}
-.ProjectPage__Button>button{
-.button();
-  transition-duration: 0.15s;
-}
-.ProjectPage__Button>button:hover{
-  transform: scale(1.1);
-}
 .Projects {
   padding: 1rem;
   display: grid;
@@ -90,34 +97,22 @@ select{
   height: 100%;
   .flex();
   flex-direction: column;
-
-
+  & button{
+    margin-top: 5rem;
+    .button();
+    transition-duration: 0.15s;
+    &:hover{
+      transform: scale(1.05);
+    }
+    &:disabled{
+      background: gray;
+    }
+  }
+  & input{
+    width: 100%;
+    margin: 0;
+  }
 }
-.ProjectPage__form button{
-  margin-top: 5rem;
-  .button();
-  transition-duration: 0.15s;
-}
-.ProjectPage__form button:disabled{
-background: gray;
-}
-.ProjectPage__form button:hover{
-  transform: scale(1.05);
-}
-.ProjectPage__form input{
-  width: 100%;
-  margin: 0;
-
-}
-.Project p {
-  margin: 0;
-  margin-bottom: 1rem;
-}
-
-.Project p:last-child {
-  margin-bottom: 0;
-}
-
 
 .FormDate input {
   width: 50px;

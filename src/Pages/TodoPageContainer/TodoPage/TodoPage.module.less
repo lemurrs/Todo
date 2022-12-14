@@ -43,7 +43,47 @@ input:active {
   border-radius: 1rem;
   max-width: 1200px;
   margin: 1rem auto;
-
+  &__filterTodo {
+    margin: 1rem;
+    display: flex;
+    & input:last-child{
+      margin-right: 0;
+    }
+  }
+  &__createTodo {
+    position: relative;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+  &__modal{
+      text-align: center;
+      & input{
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 1rem;
+        &:first-child{
+          margin-right: 1rem;
+        }
+      }
+      & select {
+        .select();
+        width: 100%;
+      }
+      & button {
+        .button();
+        transition: all 0.5s;
+        &:hover {
+          transform: scale(1.1);
+          background: @Button-hoverBackgroundColor
+        }
+        &:disabled {
+          background: gray;
+          &:hover {
+            transform: scale(1);
+          }
+        }
+      }
+    }
   &__title{
     .title()
   }
@@ -124,15 +164,14 @@ input:active {
   color: white;
   .todos();
   margin-bottom: 1rem;
+  &__delete{
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+  }
 }
 
-.todo__delete {
-  position: absolute;
-  right: 1rem;
-  top: 50%;
-  transform: translateY(-50%);
-
-}
 .comments__buttons{
   grid-row: 2/3;
   grid-column: 1/2;
@@ -142,53 +181,34 @@ input:active {
   .goldButton()
 }
 
-.info__info {
-  position: relative;
-  margin: 1rem;
-  padding: 0 1rem;
-  background: #444343;
-  border-radius: 1rem;
-}
-
-.InfoForm input {
-  margin-bottom: 1rem;
-}
-
 .InfoForm {
   display: flex;
   flex-direction: column;
-}
-
-.InfoForm p {
-  margin: 0;
-}
-
-.InfoForm select {
-  margin-bottom: 1rem;
-  .select()
-}
-
-.InfoForm button {
-  .button();
-  margin-bottom: 1rem;
-  transition-duration: .5s;
-}
-
-.InfoForm button:hover {
-  background: @Button-hoverBackgroundColor;
-  transform: scale(1.1);
-}
-
-.InfoForm button:disabled {
-  background: gray;
-}
-
-.InfoForm button:disabled:hover {
-  transform: scale(1);
-}
-
-.info__info h2 {
-  text-align: center;
+  & p {
+    margin: 0;
+  }
+  & select {
+    margin-bottom: 1rem;
+    .select()
+  }
+  & input {
+    margin-bottom: 1rem;
+  }
+  & button {
+    .button();
+    margin-bottom: 1rem;
+    transition-duration: .5s;
+    &:hover{
+      background: @Button-hoverBackgroundColor;
+      transform: scale(1.1);
+    }
+    &:disabled{
+      background: gray;
+      &:hover{
+        transform: scale(1);
+      }
+    }
+  }
 }
 
 .todo__delete svg {
@@ -201,13 +221,6 @@ input:active {
   transform: scale(1.3);
 }
 
-.info__comments{
-  grid-column: 1/-1;
-}
-
-
-
-
 @keyframes divCreated {
   0% {
     transform: translateY(100rem);
@@ -216,47 +229,6 @@ input:active {
     transform: translateY(0);
   }
 }
-
-.info__dragDrop {
-  background: @Div-backgroundColor;
-  border-radius: 1rem;
-  color: white;
-  margin: 0 1rem;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  justify-items: center;
-  grid-column: 2/5;
-  grid-row: 1/-1;
-  padding: 1rem;
-  gap: 1rem;
-  & div{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-  }
-  & .Board{
-    &:first-child{
-      padding: 1rem;
-      border: 1px solid red;
-      background: rgba(255, 0, 0, 0.1);
-      border-radius: 1rem;
-    }
-    &:nth-child(2){
-      border: 1px solid blue;
-      background: rgba(0, 0, 255, 0.1);
-      padding: 1rem;
-      border-radius: 1rem;
-    }
-    &:nth-child(3){
-      border: 1px solid green;
-      background: rgba(0, 255, 0, 0.1);
-      padding: 1rem;
-      border-radius: 1rem;
-    }
-  }
-}
-
 .Board__title {
   margin-top: 1rem;
   &:first-child{
@@ -264,14 +236,66 @@ input:active {
     margin-top: 0;
   }
 }
-
-.info__create {
-  grid-column: 1/2;
-}
-
-.info__extraTodo {
-  grid-column: 2/5;
-  grid-row: 2/3;
+.info{
+  &__comments{
+    grid-column: 1/-1;
+  }
+  &__info {
+    position: relative;
+    margin: 1rem;
+    padding: 0 1rem;
+    background: #444343;
+    border-radius: 1rem;
+    & h2 {
+      text-align: center;
+    }
+  }
+  &__create{
+    grid-column: 1/2;
+  }
+  &__extraTodo {
+    grid-column: 2/5;
+    grid-row: 2/3;
+  }
+  &__dragDrop {
+    background: @Div-backgroundColor;
+    border-radius: 1rem;
+    color: white;
+    margin: 0 1rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    justify-items: center;
+    grid-column: 2/5;
+    grid-row: 1/-1;
+    padding: 1rem;
+    gap: 1rem;
+    & div{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+    }
+    & .Board{
+      &:first-child{
+        padding: 1rem;
+        border: 1px solid red;
+        background: rgba(255, 0, 0, 0.1);
+        border-radius: 1rem;
+      }
+      &:nth-child(2){
+        border: 1px solid blue;
+        background: rgba(0, 0, 255, 0.1);
+        padding: 1rem;
+        border-radius: 1rem;
+      }
+      &:nth-child(3){
+        border: 1px solid green;
+        background: rgba(0, 255, 0, 0.1);
+        padding: 1rem;
+        border-radius: 1rem;
+      }
+    }
+  }
 }
 
 .AboutTodo__extra {
@@ -362,6 +386,9 @@ input:active {
   cursor: grab;
   font-size: 1.5rem;
   font-weight: 700;
+  &:active{
+    cursor: grabbing;
+  }
 }
 .itemSvg{
   position: absolute;
@@ -374,93 +401,33 @@ input:active {
     scale: (1.05);
   }
 }
-.item:active {
-  cursor: grabbing;
-}
 
 .placeholder {
   width: 150px;
   height: 50vh
 }
+.FormDate {
+  & h5 {
+    text-align: center;
+    font-size: 1.5rem;
+    margin: 1rem
+  }
 
-.TodoPage__modal {
-  text-align: center;
-}
+  & > input {
+    width: 5rem;
+    margin-right: 1rem !important;
+    padding: 0;
+    text-align: center;
 
-.TodoPage__modal input:first-child {
-  margin-right: 1rem;
-}
-
-.TodoPage__modal input {
-  width: 100%;
-
-}
-
-.FormDate h5 {
-  text-align: center;
-  font-size: 1.5rem;
-  margin: 1rem
-
-}
-
-.FormDate > input {
-  width: 5rem;
-  margin-right: 1rem !important;
-  padding: 0;
-  text-align: center;
-}
-
-.FormDate > input:last-child {
-  margin-right: 0 !important;
-}
-
-.TodoPage__modal select {
-  .select();
-  width: 100%;
-}
-
-.TodoPage__modal input {
-  margin-right: 0;
-  margin-bottom: 1rem;
-}
-
-.TodoPage__modal button {
-  .button();
-  transition: all 0.5s;
-}
-
-.TodoPage__modal button:hover {
-  transform: scale(1.1);
-  background: @Button-hoverBackgroundColor
-}
-
-.TodoPage__modal button:disabled {
-  background: gray;
-}
-
-.TodoPage__modal button:disabled:hover {
-  transform: scale(1);
-}
-
-.TodoPage__createTodo {
-  position: relative;
-  margin-bottom: 1rem;
-  text-align: center;
+    &:last-child {
+      margin-right: 0
+    }
+  }
 }
 
 .fileUploader__fileName {
   text-align: center;
   margin-top: 1rem;
-}
-
-.TodoPage__filterTodo {
-  margin: 1rem;
-  display: flex;
-
-}
-
-.TodoPage__filterTodo input:last-child {
-  margin-right: 0;
 }
 
 @media screen and (max-width: 794px) {
