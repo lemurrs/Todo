@@ -20,12 +20,15 @@ const CommentsBlock:React.FC<Props>=({addCommentCreator,TodoId,pathName,ActiveTo
             <h3>Comments </h3>
             <div className={c.comments__wrapper}>
                 <input type={'text'} value={comment} onChange={e => setComment(e.target.value)}
-                       style={{display: !TodoId ? 'none' : 'block'}}/>
-                <button className={c.comments__WriteCommentButton} disabled={!TodoId || !comment} onClick={() => {
+                       style={{display: !TodoId ? 'none' : 'block'}} placeholder={'Write a comment here...'}/>
+                <div className={c.comments__buttons}>
+                <button className={c.GoldButton} style={{display: !comment ? 'none' : 'block'}} onClick={() => {
                     addCommentCreator(pathName, TodoId,comment);
                     setComment('')
                 }}>Comment
                 </button>
+                <button className={c.GoldButton} style={{display: !comment ? 'none' : 'block'}} onClick={(d)=>{setComment('')}}>Cancel</button>
+                </div>
             </div>
             {TodoId && ActiveTodo[0].comments.filter(el=>el.parentId===undefined).reverse().map(comment => <Comments id={comment.id} key={comment.id}
                                                                                                                      text={comment.text}

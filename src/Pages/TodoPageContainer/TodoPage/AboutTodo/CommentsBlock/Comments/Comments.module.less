@@ -4,57 +4,45 @@
 display: flex;
   flex-direction: column;
   &__text{
-
     border-radius: 1rem;
     word-break: break-all;
     padding: 1rem;
     font-size: 1.5rem;
     margin: 0.5rem;
   }
-
-  &__ReplyBlock{
-    border-radius: 2px;
-    display: grid;
-    grid-template-columns: auto auto;
-    grid-template-rows: auto auto auto;
-    & button{
-      color: white;
-      border-radius: 1rem;
-      grid-column: 2/3;
-      justify-self: end;
-      padding: 0.4rem;
-      margin-right: 1rem;
-      border: 1px solid white;
-      background: rgba(0,0,0,0.7);
-      font-size: 1.2rem;
-
-      transition: all .15s;
-      &:hover{
-        transform: scale(1.1);
-      }
-      &:disabled{
-        background: #1c1b1b;
-      }
-    }
+  &__activeReplyButton{
+    .replyButton()
   }
 
-  &__ReplyBlock input{
-    grid-column: 1/-1;
-    margin-bottom:  1rem;
-    margin-right: 0;
-    width: 100%;
+  &__ReplyBlock{
+    display: grid;
+    grid-template-rows: auto auto;
+    & input{
+      min-height: 4rem;
+      grid-column: 1/-1;
+      margin-right: 0;
+      width: 100%;
+      background: #100f0f;
+      border: none;
+    }
+  }
+  &__createdTime{
+    margin: 1rem;
   }
   &__text{
     border-radius: 0;
     grid-column: 1/-1;
     word-break: break-all;
-    border-bottom: 1px solid deepskyblue;
   }
 
 
-
+.GoldButton{
+  .goldButton() !important;
 }
-
+}
+.comments__wrapper{
+border-radius: 1rem;
+}
 
 
 

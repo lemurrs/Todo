@@ -110,22 +110,13 @@ input:active {
   transform: translateY(-50%);
 
 }
-
-.comments__WriteCommentButton{
-  transition: all .15s;
-  color: white;
-  border: 1px solid white;
-  background: rgba(0,0,0,0.7);
-  border-radius: 1rem;
+.comments__buttons{
   grid-row: 2/3;
-  grid-column: 2/3;
-  justify-self: end;
-  margin-bottom: 0.5rem;
-  font-size: 1.2rem;
-  padding: 0.5rem;
-  &:hover{
-    transform: scale(1.1);
-  }
+  grid-column: 1/2;
+  display: flex;
+}
+.GoldButton{
+  .goldButton()
 }
 
 .info__info {
@@ -211,11 +202,6 @@ input:active {
   padding: 1rem;
 }
 
-.TodoPage__AboutTodo input,
-.TodoPage__AboutTodo button {
-  .animated(created)
-}
-
 .TodoPage__AboutTodo > div:nth-child(2) {
   .animatedTiming(0.2s)
 }
@@ -290,50 +276,47 @@ input:active {
 .extra__createTask {
   display: flex;
   flex-direction: column;
+  & input{
+    margin-right: 0.5rem;
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
+  & button{
+    .button();
+    font-size: 1rem;
+    transition-duration: 0.5s;
+    height: 2rem;
+    &:hover{
+      background: @Button-hoverBackgroundColor
+    }
+    &:disabled{
+      background: gray;
+      &:hover{
+        transform: scale(1);
+      }
+    }
+  }
 }
 .comments__wrapper{
-  border-radius: 2px;
   display: grid;
   grid-template-columns: auto auto;
   grid-template-rows: auto auto;
+  background: #100f0f;
+  border-radius: 1rem;
 }
 .comments__wrapper>input{
-  border-radius: 0;
+  min-height: 4rem;
+  border-radius: 1rem;
   grid-column: 1/-1;
   width: 100%;
   border: none;
-  border-bottom: 2px solid white;
   margin: 0;
-  margin-bottom: 0.5rem;
+  background: #100f0f;
+
 }
 
 .comments__wrapper>button:disabled{
   background: #1c1b1b;
-}
-.extra__createTask input {
-  margin-right: 0.5rem;
-  width: 100%;
-  margin-bottom: 0.5rem;
-}
-
-.extra__createTask button {
-  .button();
-  font-size: 1rem;
-  transition-duration: 0.5s;
-  height: 2rem;
-}
-
-.extra__createTask button:hover {
-  transform: scale(1.15);
-  background: @Button-hoverBackgroundColor
-}
-
-.extra__createTask button:disabled {
-  background: gray;
-}
-
-.extra__createTask button:disabled:hover {
-  transform: scale(1);
 }
 
 .info__dragDrop .Board:first-child {
@@ -520,12 +503,6 @@ input:active {
     font-size: 0.9rem;
   }
 
-  .extra__createTask button {
-    .button();
-    font-size: 0.9rem;
-    transition-duration: 0.5s;
-    height: 2rem;
-  }
 
   h3 {
     font-size: 1rem !important;
