@@ -15,11 +15,6 @@ type Props={
 const CommentsBlock:React.FC<Props>=({addCommentCreator,TodoId,pathName,ActiveTodo})=>{
 
     const [comment, setComment] = useState('')
-    const [CommentLength,setCommentLength]=useState(ActiveTodo[0].comments.length+1)
-
-    useEffect(()=>{
-        setCommentLength(ActiveTodo[0].extraTasks.length+1)
-    },[ActiveTodo[0].id])
 
     return(<div className={c.info__comments}>
             <h3>Comments </h3>
@@ -27,8 +22,7 @@ const CommentsBlock:React.FC<Props>=({addCommentCreator,TodoId,pathName,ActiveTo
                 <input type={'text'} value={comment} onChange={e => setComment(e.target.value)}
                        style={{display: !TodoId ? 'none' : 'block'}}/>
                 <button className={c.comments__WriteCommentButton} disabled={!TodoId || !comment} onClick={() => {
-                    addCommentCreator(pathName, TodoId,CommentLength, comment);
-                    setCommentLength(CommentLength+1)
+                    addCommentCreator(pathName, TodoId,comment);
                     setComment('')
                 }}>Comment
                 </button>
@@ -37,9 +31,7 @@ const CommentsBlock:React.FC<Props>=({addCommentCreator,TodoId,pathName,ActiveTo
                                                                                                                      text={comment.text}
                                                                                                                      addCommentCreator={addCommentCreator}
                                                                                                                      pathName={pathName} TodoId={TodoId}
-                                                                                                                     TodoComments={ActiveTodo[0].comments}
-                                                                                                                     CommentLength={CommentLength}
-                                                                                                                     setCommentLength={setCommentLength}/>)}
+                                                                                                                     TodoComments={ActiveTodo[0].comments}/>)}
         </div>
     )
 }

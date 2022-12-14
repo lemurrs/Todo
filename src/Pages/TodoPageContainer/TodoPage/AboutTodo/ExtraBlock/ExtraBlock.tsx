@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import c from "../../TodoPage.module.less";
 import ExtraTask from "./ExtraTask/ExtraTask";
 import {ITodo} from "../../../../../Interfaces";
@@ -15,15 +15,8 @@ type Props={
 const ExtraBlock:React.FC<Props>=({TodoId,ActiveTodo,pathName,SetExtraAsDoneCreator,AddExtraTask})=>{
 
     const [extraTask, setExtraTask] = useState('')
-    const[Tasklength,setTaskLength]=useState( ActiveTodo[0].extraTasks.length+1)
-
-    useEffect(()=>{
-        setTaskLength(ActiveTodo[0].comments.length+1)
-    },[ActiveTodo[0].id])
-
     const addExtraTaskHandler = (extraTask:string) => {
-        AddExtraTask(pathName, TodoId, extraTask, Tasklength)
-        setTaskLength(Tasklength+1)
+        AddExtraTask(pathName, TodoId, extraTask)
     }
 
     return (<div className={c.AboutTodo__extra}>

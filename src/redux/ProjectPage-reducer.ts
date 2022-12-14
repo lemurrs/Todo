@@ -1,4 +1,4 @@
-import {Project, ITodo} from "../Interfaces";
+import {Project, ITodo, ExtraTask, IComments} from "../Interfaces";
 import {
     ActionTypes,
     addCommentCreatorType, AddExtraTaskType, ChangeStatusType,
@@ -17,12 +17,14 @@ export const ADD_COMMENT = 'ADD-COMMENT'
 export const SET_EXTRA_AS_DONE = 'SET-EXTRA-AS-DONE'
 export const DELETE_TODO = 'DELETE-TODO'
 
-
 let initialState = {
     ProjectData: [] as Array<Project>
 }
 export type InitialStateType = typeof initialState
 
+function idGenerator<T>(arr:Array<T & { id: number }>):number{
+    return arr.length>0 ? arr[arr.length - 1].id + 1 : 1
+}
 
 const projectPageReducer = (state = initialState, action: ActionTypes): InitialStateType => {
     switch (action.type) {
@@ -31,8 +33,7 @@ const projectPageReducer = (state = initialState, action: ActionTypes): InitialS
             return {
                 ...state, ProjectData: state.ProjectData.map(el => {
                         if (el.name !== action.name) return el
-                        let id: number = el.Todo[0] ? el.Todo[el.Todo.length - 1].id + 1 : 1
-
+                    const id = idGenerator<ITodo>(el.Todo)
                         return {
                             ...el,
                             Todo: [...el.Todo,
@@ -97,7 +98,6 @@ const projectPageReducer = (state = initialState, action: ActionTypes): InitialS
                 )
             }
 
-
         case ADD_EXTRA:
             return {
                 ...state, ProjectData: state.ProjectData.map(el => {
@@ -110,12 +110,15 @@ const projectPageReducer = (state = initialState, action: ActionTypes): InitialS
                             if (el.id !== action.id) {
                                 return el
                             }
+
+                            const id = idGenerator<ExtraTask>(el.extraTasks)
+
                             return {
                                 ...el,
                                 extraTasks: [...el.extraTasks,
                                     {
                                         text: action.extra,
-                                        id: action.extraId,
+                                        id: id,
                                         status: 'todo'
                                     }]
                             }
@@ -136,10 +139,13 @@ const projectPageReducer = (state = initialState, action: ActionTypes): InitialS
                             if (el.id !== action.id) {
                                 return el
                             }
+
+                            const id = idGenerator<IComments>(el.comments)
+
                             return {
                                 ...el,
                                 comments: [...el.comments, {
-                                    id: action.commentId,
+                                    id: id,
                                     text: action.text,
                                     parentId: action.parentId
                                 }]
@@ -153,10 +159,13 @@ const projectPageReducer = (state = initialState, action: ActionTypes): InitialS
         }
 
         case CREATE_PROJECT:
+
+            let id = idGenerator<Project>(state.ProjectData)
+
             return {
                 ...state,
                 ProjectData: [...state.ProjectData, {
-                    id: action.id,
+                    id: id,
                     name: action.name,
                     Todo: [],
                 }]
@@ -212,12 +221,10 @@ const projectPageReducer = (state = initialState, action: ActionTypes): InitialS
     }
 }
 
-
-export let addCommentCreator = (name: string, id: number, commentId: number, text: string, parentId: number): addCommentCreatorType => ({
+export let addCommentCreator = (name: string, id: number, text: string, parentId: number): addCommentCreatorType => ({
     type: ADD_COMMENT,
     name: name,
     id: id,
-    commentId: commentId,
     text: text,
     parentId: parentId
 
@@ -242,17 +249,15 @@ export let SetTodoCreator = (name: string, title: string, description: string, p
     comments: [],
     files: files
 })
-export let AddExtraTask = (name: string, id: number, extra: string, extraId: number): AddExtraTaskType => ({
+export let AddExtraTask = (name: string, id: number, extra: string): AddExtraTaskType => ({
     type: ADD_EXTRA,
     extra: extra,
     name: name,
     id: id,
-    extraId: extraId,
 })
-export let ProjectCreator = (name: string, id: number): ProjectCreatorType => ({
+export let ProjectCreator = (name: string): ProjectCreatorType => ({
     type: CREATE_PROJECT,
     name: name,
-    id: id,
 })
 export let ChangeStatus = (name: string, id: number, status: string): ChangeStatusType => ({
     type: CHANGE_STATUS,

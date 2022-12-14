@@ -31,7 +31,6 @@ export type addCommentCreatorType={
     type:typeof ADD_COMMENT,
     name:string,
     id:number,
-    commentId:number,
     text:string,
     parentId:number,
 }
@@ -59,12 +58,10 @@ export type AddExtraTaskType={
     extra:string,
     name:string,
     id:number,
-    extraId:number,
 }
 export type ProjectCreatorType={
     type:typeof CREATE_PROJECT,
     name: string,
-    id:number,
 }
 export type ChangeStatusType={
     type:typeof CHANGE_STATUS,

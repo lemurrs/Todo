@@ -16,7 +16,7 @@ const ProjectPage:React.FC<ProjectPageProps>=({ProjectData, ProjectCreator}) =>{
         function HandleSubmit(e:FormEvent<HTMLFormElement>) {
             e.preventDefault()
             if(ProjectData.every((project)=>project.name!==title)){
-                ProjectCreator(title, ProjectData.length + 1)
+                ProjectCreator(title)
                 setModalActive(false)
             } else setError(true)
         }
