@@ -1,4 +1,15 @@
-<p align='center'>
-<img src="https://user-images.githubusercontent.com/114086843/205434539-662a6c1d-ea42-4139-9ae6-cbe9abd49580.gif" alt="animated" width='100%'/>
-</p>
+<h1>Проект <a href='https://lemurrs.github.io/Todo/'>Todo</a></h1>
+<h2>Описание проекта</h2>
+<p>Интерактивный, адаптивный, одностраничный SPA сайт, где можно создать проект с задачами. У каждой задачи свои подзадачи, комментарии(каскадные), дедлайны, различные характеристики, можно добавить несколько файлов к описанию задачи. </p>
+<h2>Технологии</h2>
+<ul>
+<li>React</li>
+<li>Redux</li>
+<li>Moment</li>
+<li>TypeScript</li>
+<li>HTML</li>
+<li>CSS</li>
+<li>Nested BEM</li>
+</ul>
+
 
